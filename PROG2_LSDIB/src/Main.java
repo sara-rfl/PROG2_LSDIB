@@ -12,6 +12,22 @@ public class Main {
     private static List<Paciente> pacientes = new ArrayList<Paciente>();
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        criarPacienteTeste();
+
+        boolean continuar = true;
+        while (continuar) {
+            System.out.println("Adicionar novo paciente? (s/n) ");
+            String opcao = scanner.next().toLowerCase();
+            if (opcao.equals("s")) {
+                Paciente paciente = criarPaciente(scanner);
+                pacientes.add(paciente);
+                inserirSinaisVinais(scanner, paciente);
+            } else {
+                continuar = false;
+            }
+        }
 
     }
 
@@ -40,5 +56,32 @@ public class Main {
         double peso = scanner.nextDouble();
 
         return new Paciente(nome, dataNascimento, altura, peso);
+    }
+
+    public static void inserirSinaisVinais(Scanner scanner, Paciente paciente) {
+        System.out.println("Introduza os valores de frequencia cardiaca (0 para terminar): ");
+        double valor;
+        do {
+            valor = scanner.nextDouble();
+            if (valor > 0) {
+                paciente.addFrequenciaCardiaca(valor);
+            }
+        } while (valor > 0);
+
+        System.out.println("Introduza os valores de temperatura (0 para terminar): ");
+        do {
+            valor = scanner.nextDouble();
+            if (valor > 0) {
+                paciente.addTemperatura(valor);
+            }
+        } while (valor > 0);
+
+        System.out.println("Introduza os valores de saturacao de oxigenio (0 para terminar): ");
+        do {
+            valor = scanner.nextDouble();
+            if (valor > 0) {
+                paciente.addSaturacaoOxigenio(valor);
+            }
+        } while (valor > 0);
     }
 }
