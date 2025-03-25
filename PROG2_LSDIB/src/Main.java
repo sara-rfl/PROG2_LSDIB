@@ -28,7 +28,7 @@ public class Main {
                 continuar = false;
             }
         }
-
+        calcularMedidasTodos();
     }
 
 
@@ -83,5 +83,114 @@ public class Main {
                 paciente.addSaturacaoOxigenio(valor);
             }
         } while (valor > 0);
+    }
+
+    public static void calcularMedidasPaciente(Scanner scanner) {
+        System.out.println("\nLista de Pacientes:");
+        for (int i = 0; i < pacientes.size(); i++) {
+            System.out.println(i + ": " + pacientes.get(i).getNome());
+        }
+
+        System.out.print("Escolha o paciente (índice): ");
+        int indice = scanner.nextInt();
+        if (indice >= 0 && indice < pacientes.size()) {
+            Paciente paciente = pacientes.get(indice);
+            System.out.println("\nCalculando medidas para o paciente: " + paciente.getNome());
+            calcularEImprimirMedidas(paciente);
+        } else {
+            System.out.println("Índice inválido.");
+        }
+    }
+
+    public static void calcularMedidasGrupo(Scanner scanner) {
+        System.out.println("\nLista de Pacientes:");
+        for (int i = 0; i < pacientes.size(); i++) {
+            System.out.println(i + ": " + pacientes.get(i).getNome());
+        }
+
+        System.out.print("Escolha o grupo de pacientes (início e fim separados por espaço): ");
+        int inicio = scanner.nextInt();
+        int fim = scanner.nextInt();
+
+        if (inicio >= 0 && fim < pacientes.size() && inicio <= fim) {
+            List<Paciente> grupo = pacientes.subList(inicio, fim + 1);
+            System.out.println("\nCalculando medidas para o grupo de pacientes requisitado.");
+            for (Paciente paciente : grupo) {
+                System.out.println("\nPaciente: " + paciente.getNome());
+                calcularEImprimirMedidas(paciente);
+            }
+        } else {
+            System.out.println("Intervalo inválido.");
+        }
+    }
+
+    public static void calcularMedidasTodos() {
+        System.out.println("\nCalculando medidas para todos os pacientes registados.");
+        for (Paciente paciente : pacientes) {
+            System.out.println("\nPaciente: " + paciente.getNome());
+            calcularEImprimirMedidas(paciente);
+        }
+    }
+
+    public static void calcularEImprimirMedidas(Paciente paciente) {
+        List<Double> frequenciasCardiacas = paciente.getFrequenciasCardiacas();
+        List<Double> temperaturas = paciente.getTemperaturas();
+        List<Double> saturacoes = paciente.getSaturacoesOxigenio();
+
+        System.out.println("Média da Frequência Cardíaca: " + String.format("%.2f", calcularMedia(frequenciasCardiacas)));
+        System.out.println("Desvio Padrão da Frequência Cardíaca: " + String.format("%.2f", calcularDesvioPadrao(frequenciasCardiacas)));
+        System.out.println("Mínimo da Frequência Cardíaca: " + String.format("%.2f", calcularMinimo(frequenciasCardiacas)));
+        System.out.println("Máximo da Frequência Cardíaca: " + String.format("%.2f", calcularMaximo(frequenciasCardiacas)));
+
+        System.out.println("Média da Temperatura: " + String.format("%.2f", calcularMedia(temperaturas)));
+        System.out.println("Desvio Padrão da Temperatura: " + String.format("%.2f", calcularDesvioPadrao(temperaturas)));
+        System.out.println("Mínimo da Temperatura: " + String.format("%.2f", calcularMinimo(temperaturas)));
+        System.out.println("Máximo da Temperatura: " + String.format("%.2f", calcularMaximo(temperaturas)));
+
+        System.out.println("Média da Saturação de Oxigênio: " + String.format("%.2f", calcularMedia(saturacoes)));
+        System.out.println("Desvio Padrão da Saturação de Oxigênio: " + String.format("%.2f", calcularDesvioPadrao(saturacoes)));
+        System.out.println("Mínimo da Saturação de Oxigênio: " + String.format("%.2f", calcularMinimo(saturacoes)));
+        System.out.println("Máximo da Saturação de Oxigênio: " + String.format("%.2f", calcularMaximo(saturacoes)));
+    }
+
+    public static double calcularMedia(List<Double> valores) {
+        if (valores.isEmpty()) return 0;
+        double soma = 0;
+        for (double valor : valores) {
+            soma += valor;
+        }
+        return soma / valores.size();
+    }
+
+    public static double calcularDesvioPadrao(List<Double> valores) {
+        if (valores.size() < 2) return 0;
+        double media = calcularMedia(valores);
+        double somaQuadrados = 0;
+        for (double valor : valores) {
+            somaQuadrados += Math.pow(valor - media, 2);
+        }
+        return Math.sqrt(somaQuadrados / valores.size());
+    }
+
+    public static double calcularMinimo(List<Double> valores) {
+        if (valores.isEmpty()) return 0;
+        double minimo = valores.get(0);
+        for (double valor : valores) {
+            if (valor < minimo) {
+                minimo = valor;
+            }
+        }
+        return minimo;
+    }
+
+    public static double calcularMaximo(List<Double> valores) {
+        if (valores.isEmpty()) return 0;
+        double maximo = valores.get(0);
+        for (double valor : valores) {
+            if (valor > maximo) {
+                maximo = valor;
+            }
+        }
+        return maximo;
     }
 }
