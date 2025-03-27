@@ -9,7 +9,7 @@ public class Main {
     public static final double TEMPERATURA_MAX = 45.0;
     public static final double SATURACAO_MIN = 70.0;
     public static final double SATURACAO_MAX = 100.0;
-    private static List<Paciente> pacientes = new ArrayList<Paciente>();
+    public static List<Paciente> pacientes = new ArrayList<>();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -28,10 +28,8 @@ public class Main {
                 continuar = false;
             }
         }
-        calcularMedidasTodos();
+        menuDadosEstatisticos(scanner);
     }
-
-
 
     public static void criarPacienteTeste() {
         Paciente p1 = new Paciente("João", "25/06/2009", 1.78, 69);
@@ -41,6 +39,14 @@ public class Main {
         p1.addTemperatura(37.0);
         p1.addSaturacaoOxigenio(98.0);
         pacientes.add(p1);
+
+        Paciente p2 = new Paciente("Pablo", "25/06/2009", 1.89, 90);
+        p1.addFrequenciaCardiaca(79);
+        p1.addFrequenciaCardiaca(99);
+        p1.addTemperatura(37.9);
+        p1.addTemperatura(37.0);
+        p1.addSaturacaoOxigenio(97.0);
+        pacientes.add(p2);
     }
 
     public static Paciente criarPaciente(Scanner scanner) {
@@ -85,112 +91,28 @@ public class Main {
         } while (valor > 0);
     }
 
-    public static void calcularMedidasPaciente(Scanner scanner) {
-        System.out.println("\nLista de Pacientes:");
-        for (int i = 0; i < pacientes.size(); i++) {
-            System.out.println(i + ": " + pacientes.get(i).getNome());
-        }
+    public static void menuDadosEstatisticos(Scanner scanner) {
+        boolean continuarMenu = true;
+        while (continuarMenu) {
+            System.out.println("\nEscolha uma opção:");
+            System.out.println("1 - Calcular medidas de sumário para um paciente");
+            System.out.println("2 - Calcular medidas de sumário para um grupo de pacientes");
+            System.out.println("3 - Calcular medidas de sumário para todos os pacientes");
+            System.out.println("4 - Sair");
+            int opcaoMenu = scanner.nextInt();
 
-        System.out.print("Escolha o paciente (índice): ");
-        int indice = scanner.nextInt();
-        if (indice >= 0 && indice < pacientes.size()) {
-            Paciente paciente = pacientes.get(indice);
-            System.out.println("\nCalculando medidas para o paciente: " + paciente.getNome());
-            calcularEImprimirMedidas(paciente);
-        } else {
-            System.out.println("Índice inválido.");
-        }
-    }
-
-    public static void calcularMedidasGrupo(Scanner scanner) {
-        System.out.println("\nLista de Pacientes:");
-        for (int i = 0; i < pacientes.size(); i++) {
-            System.out.println(i + ": " + pacientes.get(i).getNome());
-        }
-
-        System.out.print("Escolha o grupo de pacientes (início e fim separados por espaço): ");
-        int inicio = scanner.nextInt();
-        int fim = scanner.nextInt();
-
-        if (inicio >= 0 && fim < pacientes.size() && inicio <= fim) {
-            List<Paciente> grupo = pacientes.subList(inicio, fim + 1);
-            System.out.println("\nCalculando medidas para o grupo de pacientes requisitado.");
-            for (Paciente paciente : grupo) {
-                System.out.println("\nPaciente: " + paciente.getNome());
-                calcularEImprimirMedidas(paciente);
-            }
-        } else {
-            System.out.println("Intervalo inválido.");
-        }
-    }
-
-    public static void calcularMedidasTodos() {
-        System.out.println("\nCalculando medidas para todos os pacientes registados.");
-        for (Paciente paciente : pacientes) {
-            System.out.println("\nPaciente: " + paciente.getNome());
-            calcularEImprimirMedidas(paciente);
-        }
-    }
-
-    public static void calcularEImprimirMedidas(Paciente paciente) {
-        List<Double> frequenciasCardiacas = paciente.getFrequenciasCardiacas();
-        List<Double> temperaturas = paciente.getTemperaturas();
-        List<Double> saturacoes = paciente.getSaturacoesOxigenio();
-
-        System.out.println("Média da Frequência Cardíaca: " + String.format("%.2f", calcularMedia(frequenciasCardiacas)));
-        System.out.println("Desvio Padrão da Frequência Cardíaca: " + String.format("%.2f", calcularDesvioPadrao(frequenciasCardiacas)));
-        System.out.println("Mínimo da Frequência Cardíaca: " + String.format("%.2f", calcularMinimo(frequenciasCardiacas)));
-        System.out.println("Máximo da Frequência Cardíaca: " + String.format("%.2f", calcularMaximo(frequenciasCardiacas)));
-
-        System.out.println("Média da Temperatura: " + String.format("%.2f", calcularMedia(temperaturas)));
-        System.out.println("Desvio Padrão da Temperatura: " + String.format("%.2f", calcularDesvioPadrao(temperaturas)));
-        System.out.println("Mínimo da Temperatura: " + String.format("%.2f", calcularMinimo(temperaturas)));
-        System.out.println("Máximo da Temperatura: " + String.format("%.2f", calcularMaximo(temperaturas)));
-
-        System.out.println("Média da Saturação de Oxigênio: " + String.format("%.2f", calcularMedia(saturacoes)));
-        System.out.println("Desvio Padrão da Saturação de Oxigênio: " + String.format("%.2f", calcularDesvioPadrao(saturacoes)));
-        System.out.println("Mínimo da Saturação de Oxigênio: " + String.format("%.2f", calcularMinimo(saturacoes)));
-        System.out.println("Máximo da Saturação de Oxigênio: " + String.format("%.2f", calcularMaximo(saturacoes)));
-    }
-
-    public static double calcularMedia(List<Double> valores) {
-        if (valores.isEmpty()) return 0;
-        double soma = 0;
-        for (double valor : valores) {
-            soma += valor;
-        }
-        return soma / valores.size();
-    }
-
-    public static double calcularDesvioPadrao(List<Double> valores) {
-        if (valores.size() < 2) return 0;
-        double media = calcularMedia(valores);
-        double somaQuadrados = 0;
-        for (double valor : valores) {
-            somaQuadrados += Math.pow(valor - media, 2);
-        }
-        return Math.sqrt(somaQuadrados / valores.size());
-    }
-
-    public static double calcularMinimo(List<Double> valores) {
-        if (valores.isEmpty()) return 0;
-        double minimo = valores.get(0);
-        for (double valor : valores) {
-            if (valor < minimo) {
-                minimo = valor;
+            if (opcaoMenu == 1) {
+                GestorPacientes.calcularMedidasPaciente(scanner, pacientes);
+            } else if (opcaoMenu == 2) {
+                GestorPacientes.calcularMedidasGrupo(scanner, pacientes);
+            } else if (opcaoMenu == 3) {
+                GestorPacientes.calcularMedidasTodos(pacientes);
+            } else if (opcaoMenu == 4) {
+                System.out.println("A sair...");
+                continuarMenu = false;
+            } else {
+                System.out.println("Opção inválida. Tente novamente.");
             }
         }
-        return minimo;
-    }
-
-    public static double calcularMaximo(List<Double> valores) {
-        if (valores.isEmpty()) return 0;
-        double maximo = valores.get(0);
-        for (double valor : valores) {
-            if (valor > maximo) {
-                maximo = valor;
-            }
-        }
-        return maximo;
     }
 }
