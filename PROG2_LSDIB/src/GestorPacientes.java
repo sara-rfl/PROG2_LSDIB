@@ -3,53 +3,115 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GestorPacientes {
+    // cria um novo int com IDs dos pacientes, começando no 1000 ("Paciente Zero" = ID:1000)
+    private static int currentId = 1000;
+
+    public static int gerarNovoId() {
+        return currentId++;
+    }
 
     public static void calcularMedidasPaciente(Scanner scanner, List<Paciente> pacientes) {
         System.out.println("\nLista de Pacientes:");
-        for (int i = 0; i < pacientes.size(); i++) {
-            System.out.println(i + ": " + pacientes.get(i).getNome());
+        for (Paciente paciente : pacientes) {
+            System.out.println("ID " + paciente.getId() + ": " + paciente.getNome());
         }
+
+//        System.out.println("\nLista de Pacientes:");
+//        for (int i = 0; i < pacientes.size(); i++) {
+//            System.out.println(i + ": " + pacientes.get(i).getNome());
+//        }
         System.out.print("Escolha o paciente (índice): ");
         int indice = scanner.nextInt();
-        if (indice >= 0 && indice < pacientes.size()) {
-            Paciente paciente = pacientes.get(indice);
-            System.out.println("\nCalculando medidas para o paciente: " + paciente.getNome());
 
-            List<Double> frequenciasCardiacas = paciente.getFrequenciasCardiacas();
-            List<Double> temperaturas = paciente.getTemperaturas();
-            List<Double> saturacoesOxigenio = paciente.getSaturacoesOxigenio();
+        Paciente pacienteEscolhido = null;
+        for (Paciente paciente : pacientes) {
+            if (paciente.getId() == indice) {
+                pacienteEscolhido = paciente;
+                break;
+            }
+        }
+        if (pacienteEscolhido != null && indice >= 0 && indice < pacientes.size()) {
+            System.out.println("\nCalculando medidas para o paciente: " + pacienteEscolhido.getId() + ": " + pacienteEscolhido.getNome()); //Apresentar o paciente que está a ser medido por nome e ID
+
+            List<Double> frequenciasCardiacas = pacienteEscolhido.getFrequenciasCardiacas();
+            List<Double> temperaturas = pacienteEscolhido.getTemperaturas();
+            List<Double> saturacoesOxigenio = pacienteEscolhido.getSaturacoesOxigenio();
+
             imprimirMedidas(frequenciasCardiacas, temperaturas, saturacoesOxigenio);
         } else {
-            System.out.println("Índice inválido.");
+            System.out.println("ID inválido.");
         }
     }
 
+
+
     public static void calcularMedidasGrupo(Scanner scanner, List<Paciente> pacientes) {
         System.out.println("\nLista de Pacientes:");
-        for (int i = 0; i < pacientes.size(); i++) {
-            System.out.println(i + ": " + pacientes.get(i).getNome());
+        //Imprime todos os IDs registados
+        for (Paciente paciente : pacientes) {
+            System.out.println("ID " + paciente.getId() + ": " + paciente.getNome());
         }
-        System.out.print("Escolha o grupo de pacientes (início e fim separados por espaço): ");
-        int inicio = scanner.nextInt();
-        int fim = scanner.nextInt();
 
-        if (inicio >= 0 && fim < pacientes.size() && inicio <= fim) {
-            List<Paciente> grupo = pacientes.subList(inicio, fim + 1);
-            System.out.println("\nCalculando medidas para o grupo de pacientes requisitado.");
+        String[] IDs = scanner.nextLine().split(" ");
+//        System.out.print("Escolha o grupo de pacientes (início e fim separados por espaço): ");
+//        int inicio = scanner.nextInt();
+//        int fim = scanner.nextInt();
 
-            List<Double> frequenciasCardiacas = new ArrayList<>();
-            List<Double> temperaturas = new ArrayList<>();
-            List<Double> saturacoesOxigenio = new ArrayList<>();
+        List<Double> frequenciasCardiacas = new ArrayList<>();
+        List<Double> temperaturas = new ArrayList<>();
+        List<Double> saturacoesOxigenio = new ArrayList<>();
 
-            for (Paciente paciente : grupo) {
-                frequenciasCardiacas.addAll(paciente.getFrequenciasCardiacas());
-                temperaturas.addAll(paciente.getTemperaturas());
-                saturacoesOxigenio.addAll(paciente.getSaturacoesOxigenio());
+        for (int i = 0; i < IDs.length; i++) {
+            int id = 0;
+            boolean IDValido = true; // Assume o ID como válido
+
+            // Verificar se o input é um ID (indice)
+            for (int j = 0; j < IDs[i].length(); j++) {
+                char c = IDs[i].charAt(j);
+                if (c < '0' || c > '9') {
+                    IDValido = false; // Se ID for consituido por outros caractéres que não números, o input é considderado inválido
+                }
             }
-            imprimirMedidas(frequenciasCardiacas, temperaturas, saturacoesOxigenio);
-        } else {
-            System.out.println("Intervalo inválido.");
+            if (IDValido) {
+                id = Integer.parseInt(IDs[i]);
+                Paciente pacienteEscolhido = null;
+
+                for (int j = 0; j < pacientes.size(); j++) {
+                    if (pacientes.get(j).getId() == id) {
+                        pacienteEscolhido = pacientes.get(j);
+                    }
+                }
+
+                if (pacienteEscolhido != null) {
+                    frequenciasCardiacas.addAll(pacienteEscolhido.getFrequenciasCardiacas());
+                    temperaturas.addAll(pacienteEscolhido.getTemperaturas());
+                    saturacoesOxigenio.addAll(pacienteEscolhido.getSaturacoesOxigenio());
+                } else {
+                    System.out.println("ID inválido: " + id);
+                }
+            } else {
+                System.out.println("ID inválido: " + IDs[i]);
+            }
         }
+        imprimirMedidas(frequenciasCardiacas, temperaturas, saturacoesOxigenio);
+
+//        if (inicio >= 0 && fim < pacientes.size() && inicio <= fim) {
+//            List<Paciente> grupo = pacientes.subList(inicio, fim + 1);
+//            System.out.println("\nCalculando medidas para o grupo de pacientes requisitado.");
+//
+//            List<Double> frequenciasCardiacas = new ArrayList<>();
+//            List<Double> temperaturas = new ArrayList<>();
+//            List<Double> saturacoesOxigenio = new ArrayList<>();
+//
+//            for (Paciente paciente : grupo) {
+//                frequenciasCardiacas.addAll(paciente.getFrequenciasCardiacas());
+//                temperaturas.addAll(paciente.getTemperaturas());
+//                saturacoesOxigenio.addAll(paciente.getSaturacoesOxigenio());
+//            }
+//            imprimirMedidas(frequenciasCardiacas, temperaturas, saturacoesOxigenio);
+//        } else {
+//            System.out.println("Intervalo inválido.");
+//        }
     }
 
     public static void calcularMedidasTodos(List<Paciente> pacientes) {
