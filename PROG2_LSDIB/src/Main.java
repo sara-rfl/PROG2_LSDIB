@@ -11,6 +11,7 @@ public class Main {
     public static final double SATURACAO_MAX = 100.0;
     public static List<Paciente> pacientes = new ArrayList<>();
 
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -52,6 +53,7 @@ public class Main {
     public static Paciente criarPaciente(Scanner scanner) {
         scanner.nextLine();
         System.out.println("Introduza os dados do paciente: ");
+        int id = GestorPacientes.gerarNovoId(); // Gera um novo ID único para o paciente
         System.out.print("Nome: ");
         String nome = scanner.nextLine();
         System.out.print("Data de Nascimento (dd/mm/aaaa): ");
@@ -60,6 +62,8 @@ public class Main {
         double altura = scanner.nextDouble();
         System.out.print("Peso (kg): ");
         double peso = scanner.nextDouble();
+
+        System.out.println("Paciente ID: " + id + " registado com sucesso!"); // Aparecer o paciente registado por ID  e não pelo nome
 
         return new Paciente(nome, dataNascimento, altura, peso);
     }

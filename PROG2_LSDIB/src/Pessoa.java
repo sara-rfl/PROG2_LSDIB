@@ -3,12 +3,14 @@ public class Pessoa {
     private String dataDeNascimento;
     private double altura;
     private double peso;
+    private int id;
 
     public Pessoa(String nome, String dataDeNascimento,  double altura, double peso) {
         this.dataDeNascimento = dataDeNascimento;
         this.nome = nome;
         this.altura = altura;
         this.peso = peso;
+        this.id = id;
     }
 
     //Faço construtor vazio?
@@ -45,7 +47,12 @@ public class Pessoa {
         this.peso = peso;
     }
 
+    // Criar funções para o construtor ir buscar o ID implementado associado ao paciente
+    public int getId() { return id;}
+
+    public void setId(int id) { this.id = id; }
+
     public String toString() {
-        return String.format("Pessoa: %s, Data de Nascimento: %s, Altura: %.2f, Peso: %.2f", nome, dataDeNascimento, altura, peso);
+        return String.format("Pessoa: %s, ID: %i, Data de Nascimento: %s, Altura: %.2f, Peso: %.2f", nome, id, altura, peso);
     }
 }
