@@ -33,7 +33,7 @@ public class Main {
     }
 
     public static void criarPacienteTeste() {
-        Paciente p1 = new Paciente("João", "25/06/2009", 1.78, 69);
+        Paciente p1 = new Paciente("João Rodrigues", "25/06/2009", 1.78, 69, GestorPacientes.gerarNovoId());
         p1.addFrequenciaCardiaca(72);
         p1.addFrequenciaCardiaca(89);
         p1.addTemperatura(37.5);
@@ -41,7 +41,7 @@ public class Main {
         p1.addSaturacaoOxigenio(98.0);
         pacientes.add(p1);
 
-        Paciente p2 = new Paciente("Pablo", "25/06/2009", 1.89, 90);
+        Paciente p2 = new Paciente("Pablo Caetano", "25/06/2009", 1.89, 90, GestorPacientes.gerarNovoId());
         p1.addFrequenciaCardiaca(79);
         p1.addFrequenciaCardiaca(99);
         p1.addTemperatura(37.9);
@@ -65,7 +65,7 @@ public class Main {
 
         System.out.println("Paciente ID: " + id + " registado com sucesso!"); // Aparecer o paciente registado por ID  e não pelo nome
 
-        return new Paciente(nome, dataNascimento, altura, peso);
+        return new Paciente(nome, dataNascimento, altura, peso, id);
     }
 
     public static void inserirSinaisVinais(Scanner scanner, Paciente paciente) {
@@ -104,6 +104,7 @@ public class Main {
             System.out.println("3 - Calcular medidas de sumário para todos os pacientes");
             System.out.println("4 - Sair");
             int opcaoMenu = scanner.nextInt();
+            scanner.nextLine();
 
             if (opcaoMenu == 1) {
                 GestorPacientes.calcularMedidasPaciente(scanner, pacientes);

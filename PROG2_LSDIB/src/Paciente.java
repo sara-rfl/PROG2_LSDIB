@@ -7,8 +7,8 @@ public class Paciente extends Pessoa {
     private List<Double> temperaturas = new ArrayList<Double>();
     private List<Double> saturacoesOxigenio = new ArrayList<Double>();
 
-    public Paciente(String nome, String dataDeNascimento, double altura, double peso) {
-        super(nome, dataDeNascimento, altura, peso);
+    public Paciente(String nome, String dataDeNascimento, double altura, double peso, int id) {
+        super(nome, dataDeNascimento, altura, peso, id);
     }
 
     public void addFrequenciaCardiaca (double frequenciaCardiaca) {
@@ -45,6 +45,4 @@ public class Paciente extends Pessoa {
     public String toString() {
         return super.toString();
     }
-
-
 }

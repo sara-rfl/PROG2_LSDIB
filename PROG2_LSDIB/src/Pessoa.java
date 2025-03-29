@@ -5,7 +5,7 @@ public class Pessoa {
     private double peso;
     private int id;
 
-    public Pessoa(String nome, String dataDeNascimento,  double altura, double peso) {
+    public Pessoa(String nome, String dataDeNascimento,  double altura, double peso, int id) {
         this.dataDeNascimento = dataDeNascimento;
         this.nome = nome;
         this.altura = altura;
@@ -53,6 +53,6 @@ public class Pessoa {
     public void setId(int id) { this.id = id; }
 
     public String toString() {
-        return String.format("Pessoa: %s, ID: %i, Data de Nascimento: %s, Altura: %.2f, Peso: %.2f", nome, id, altura, peso);
+        return String.format("Pessoa: %s, ID: %d, Data de Nascimento: %s, Altura: %.2f, Peso: %.2f", nome, id, dataDeNascimento, altura, peso);
     }
 }

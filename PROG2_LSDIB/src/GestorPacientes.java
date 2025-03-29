@@ -15,23 +15,18 @@ public class GestorPacientes {
         for (Paciente paciente : pacientes) {
             System.out.println("ID " + paciente.getId() + ": " + paciente.getNome());
         }
-
-//        System.out.println("\nLista de Pacientes:");
-//        for (int i = 0; i < pacientes.size(); i++) {
-//            System.out.println(i + ": " + pacientes.get(i).getNome());
-//        }
-        System.out.print("Escolha o paciente (índice): ");
-        int indice = scanner.nextInt();
+        System.out.print("Escolha o paciente (ID): ");
+        int idEscolhido = scanner.nextInt();
 
         Paciente pacienteEscolhido = null;
         for (Paciente paciente : pacientes) {
-            if (paciente.getId() == indice) {
+            if (paciente.getId() == idEscolhido) {
                 pacienteEscolhido = paciente;
                 break;
             }
         }
-        if (pacienteEscolhido != null && indice >= 0 && indice < pacientes.size()) {
-            System.out.println("\nCalculando medidas para o paciente: " + pacienteEscolhido.getId() + ": " + pacienteEscolhido.getNome()); //Apresentar o paciente que está a ser medido por nome e ID
+        if (pacienteEscolhido != null) {
+            System.out.println("\nCalculando medidas para o paciente " + pacienteEscolhido.getId() + ": " + pacienteEscolhido.getNome());
 
             List<Double> frequenciasCardiacas = pacienteEscolhido.getFrequenciasCardiacas();
             List<Double> temperaturas = pacienteEscolhido.getTemperaturas();
@@ -44,7 +39,6 @@ public class GestorPacientes {
     }
 
 
-
     public static void calcularMedidasGrupo(Scanner scanner, List<Paciente> pacientes) {
         System.out.println("\nLista de Pacientes:");
         //Imprime todos os IDs registados
@@ -52,10 +46,9 @@ public class GestorPacientes {
             System.out.println("ID " + paciente.getId() + ": " + paciente.getNome());
         }
 
-        String[] IDs = scanner.nextLine().split(" ");
-//        System.out.print("Escolha o grupo de pacientes (início e fim separados por espaço): ");
-//        int inicio = scanner.nextInt();
-//        int fim = scanner.nextInt();
+        System.out.print("Escolha o grupo de pacientes (início e fim separados por espaço): ");
+        String line = scanner.nextLine();
+        String[] IDs = line.split(" ");
 
         List<Double> frequenciasCardiacas = new ArrayList<>();
         List<Double> temperaturas = new ArrayList<>();
@@ -94,24 +87,6 @@ public class GestorPacientes {
             }
         }
         imprimirMedidas(frequenciasCardiacas, temperaturas, saturacoesOxigenio);
-
-//        if (inicio >= 0 && fim < pacientes.size() && inicio <= fim) {
-//            List<Paciente> grupo = pacientes.subList(inicio, fim + 1);
-//            System.out.println("\nCalculando medidas para o grupo de pacientes requisitado.");
-//
-//            List<Double> frequenciasCardiacas = new ArrayList<>();
-//            List<Double> temperaturas = new ArrayList<>();
-//            List<Double> saturacoesOxigenio = new ArrayList<>();
-//
-//            for (Paciente paciente : grupo) {
-//                frequenciasCardiacas.addAll(paciente.getFrequenciasCardiacas());
-//                temperaturas.addAll(paciente.getTemperaturas());
-//                saturacoesOxigenio.addAll(paciente.getSaturacoesOxigenio());
-//            }
-//            imprimirMedidas(frequenciasCardiacas, temperaturas, saturacoesOxigenio);
-//        } else {
-//            System.out.println("Intervalo inválido.");
-//        }
     }
 
     public static void calcularMedidasTodos(List<Paciente> pacientes) {
@@ -126,12 +101,11 @@ public class GestorPacientes {
             temperaturas.addAll(paciente.getTemperaturas());
             saturacoesOxigenio.addAll(paciente.getSaturacoesOxigenio());
         }
-
         imprimirMedidas(frequenciasCardiacas, temperaturas, saturacoesOxigenio);
     }
 
     public static void imprimirMedidas(List<Double> frequenciasCardiacas, List<Double> temperaturas, List<Double> saturacoesOxigenio) {
-        System.out.println("\nDADOS:");
+        System.out.println("\nDados:");
         calcularMedidas("Frequência Cardíaca", frequenciasCardiacas);
         calcularMedidas("Temperatura", temperaturas);
         calcularMedidas("Saturação de Oxigênio", saturacoesOxigenio);
