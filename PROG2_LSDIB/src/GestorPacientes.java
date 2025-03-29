@@ -11,10 +11,7 @@ public class GestorPacientes {
     }
 
     public static void calcularMedidasPaciente(Scanner scanner, List<Paciente> pacientes) {
-        System.out.println("\nLista de Pacientes:");
-        for (Paciente paciente : pacientes) {
-            System.out.println("ID " + paciente.getId() + ": " + paciente.getNome());
-        }
+        mostrarLista(pacientes);
         System.out.print("Escolha o paciente (ID): ");
         int idEscolhido = scanner.nextInt();
 
@@ -40,12 +37,7 @@ public class GestorPacientes {
 
 
     public static void calcularMedidasGrupo(Scanner scanner, List<Paciente> pacientes) {
-        System.out.println("\nLista de Pacientes:");
-        //Imprime todos os IDs registados
-        for (Paciente paciente : pacientes) {
-            System.out.println("ID " + paciente.getId() + ": " + paciente.getNome());
-        }
-
+        mostrarLista(pacientes);
         System.out.print("Escolha o grupo de pacientes (início e fim separados por espaço): ");
         String line = scanner.nextLine();
         String[] IDs = line.split(" ");
@@ -102,6 +94,13 @@ public class GestorPacientes {
             saturacoesOxigenio.addAll(paciente.getSaturacoesOxigenio());
         }
         imprimirMedidas(frequenciasCardiacas, temperaturas, saturacoesOxigenio);
+    }
+
+    public static void mostrarLista (List<Paciente> pacientes) {
+        System.out.println("\nLista de Pacientes:");
+        for (Paciente paciente : pacientes) {
+            System.out.println("ID " + paciente.getId() + ": " + paciente.getNome());
+        }
     }
 
     public static void imprimirMedidas(List<Double> frequenciasCardiacas, List<Double> temperaturas, List<Double> saturacoesOxigenio) {

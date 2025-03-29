@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -34,21 +37,23 @@ public class Main {
 
     public static void criarPacienteTeste() {
         Paciente p1 = new Paciente("João Rodrigues", "25/06/2009", 1.78, 69, GestorPacientes.gerarNovoId());
-        p1.addFrequenciaCardiaca(72);
-        p1.addFrequenciaCardiaca(89);
-        p1.addTemperatura(37.5);
-        p1.addTemperatura(37.0);
-        p1.addSaturacaoOxigenio(98.0);
+        p1.addFrequenciaCardiaca(72, LocalDateTime.of(2024, 3, 10, 14, 30));
+        p1.addFrequenciaCardiaca(89, LocalDateTime.of(2024, 3, 11, 9, 15));
+        p1.addTemperatura(37.5, LocalDateTime.of(2024, 3, 10, 14, 45));
+        p1.addTemperatura(37.0, LocalDateTime.of(2024, 3, 11, 10, 30));
+        p1.addSaturacaoOxigenio(98.0, LocalDateTime.of(2024, 3, 9, 18, 20));
         pacientes.add(p1);
 
         Paciente p2 = new Paciente("Pablo Caetano", "25/06/2009", 1.89, 90, GestorPacientes.gerarNovoId());
-        p1.addFrequenciaCardiaca(79);
-        p1.addFrequenciaCardiaca(99);
-        p1.addTemperatura(37.9);
-        p1.addTemperatura(37.0);
-        p1.addSaturacaoOxigenio(97.0);
+        p2.addFrequenciaCardiaca(79, LocalDateTime.of(2024, 3, 8, 12, 10));
+        p2.addFrequenciaCardiaca(99, LocalDateTime.of(2024, 3, 9, 16, 45));
+        p2.addTemperatura(37.9, LocalDateTime.of(2024, 3, 8, 12, 30));
+        p2.addTemperatura(37.0, LocalDateTime.of(2024, 3, 9, 17, 10));
+        p2.addSaturacaoOxigenio(97.0, LocalDateTime.of(2024, 3, 7, 20, 00));
         pacientes.add(p2);
     }
+
+
 
     public static Paciente criarPaciente(Scanner scanner) {
         scanner.nextLine();
@@ -69,12 +74,13 @@ public class Main {
     }
 
     public static void inserirSinaisVinais(Scanner scanner, Paciente paciente) {
-        System.out.println("Introduza os valores de frequencia cardiaca (0 para terminar): ");
+        System.out.println("Introduza os valores de frequência cardíaca (0 para terminar): ");
         double valor;
         do {
             valor = scanner.nextDouble();
             if (valor > 0) {
-                paciente.addFrequenciaCardiaca(valor);
+                paciente.addFrequenciaCardiaca(valor, LocalDateTime.now());
+                System.out.println("Registado em: " + LocalDateTime.now());
             }
         } while (valor > 0);
 
@@ -82,15 +88,17 @@ public class Main {
         do {
             valor = scanner.nextDouble();
             if (valor > 0) {
-                paciente.addTemperatura(valor);
+                paciente.addTemperatura(valor, LocalDateTime.now());
+                System.out.println("Registado em: " + LocalDateTime.now());
             }
         } while (valor > 0);
 
-        System.out.println("Introduza os valores de saturacao de oxigenio (0 para terminar): ");
+        System.out.println("Introduza os valores de saturação de oxigénio (0 para terminar): ");
         do {
             valor = scanner.nextDouble();
             if (valor > 0) {
-                paciente.addSaturacaoOxigenio(valor);
+                paciente.addSaturacaoOxigenio(valor, LocalDateTime.now());
+                System.out.println("Registado em: " + LocalDateTime.now());
             }
         } while (valor > 0);
     }
@@ -107,11 +115,17 @@ public class Main {
             scanner.nextLine();
 
             if (opcaoMenu == 1) {
+                if(selecionarPeriodoDeAnalise(scanner)){
                 GestorPacientes.calcularMedidasPaciente(scanner, pacientes);
+                }
             } else if (opcaoMenu == 2) {
+                if(selecionarPeriodoDeAnalise(scanner)){
                 GestorPacientes.calcularMedidasGrupo(scanner, pacientes);
+                }
             } else if (opcaoMenu == 3) {
+                if(selecionarPeriodoDeAnalise(scanner)){
                 GestorPacientes.calcularMedidasTodos(pacientes);
+                }
             } else if (opcaoMenu == 4) {
                 System.out.println("A sair...");
                 continuarMenu = false;
@@ -120,4 +134,57 @@ public class Main {
             }
         }
     }
+    public static boolean selecionarPeriodoDeAnalise(Scanner scanner) {
+
+        System.out.print("Digite a data de início (dd/mm/aaaa): ");
+        String dataInicioStr = scanner.nextLine();
+        LocalDate dataInicio = LocalDate.parse(dataInicioStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+        System.out.print("Digite a data de fim (dd/mm/aaaa): ");
+        String dataFimStr = scanner.nextLine();
+        LocalDate dataFim = LocalDate.parse(dataFimStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+        boolean dadosDisponiveis = false;
+
+        for (Paciente paciente : pacientes) {
+            if (temRegistrosNoIntervalo(paciente, dataInicio, dataFim)) {
+                dadosDisponiveis = true;
+                break;
+            }
+        }
+        if (dadosDisponiveis) {
+            System.out.println("Calculando medidas de " + dataInicio + " a " + dataFim);
+        } else {
+            System.out.println("Não existem dados para o período selecionado.");
+        }
+        return dadosDisponiveis;
+    }
+
+    public static boolean temRegistrosNoIntervalo(Paciente paciente, LocalDate dataInicio, LocalDate dataFim) {
+        for (LocalDateTime dataRegisto : paciente.getDatasFrequencia()) {
+            LocalDate dataRegistoLocal = dataRegisto.toLocalDate();
+            if ((dataRegistoLocal.isEqual(dataInicio) || dataRegistoLocal.isAfter(dataInicio)) &&
+                    (dataRegistoLocal.isEqual(dataFim) || dataRegistoLocal.isBefore(dataFim))) {
+                return true;
+            }
+        }
+
+        for (LocalDateTime dataRegisto : paciente.getDatasTemperatura()) {
+            LocalDate dataRegistoLocal = dataRegisto.toLocalDate();
+            if ((dataRegistoLocal.isEqual(dataInicio) || dataRegistoLocal.isAfter(dataInicio)) &&
+                    (dataRegistoLocal.isEqual(dataFim) || dataRegistoLocal.isBefore(dataFim))) {
+                return true;
+            }
+        }
+
+        for (LocalDateTime dataRegisto : paciente.getDatasSaturacao()) {
+            LocalDate dataRegistoLocal = dataRegisto.toLocalDate();
+            if ((dataRegistoLocal.isEqual(dataInicio) || dataRegistoLocal.isAfter(dataInicio)) &&
+                    (dataRegistoLocal.isEqual(dataFim) || dataRegistoLocal.isBefore(dataFim))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
