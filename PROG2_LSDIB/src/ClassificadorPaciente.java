@@ -1,4 +1,36 @@
+import java.util.List;
+import java.util.Scanner;
+
 public class ClassificadorPaciente {
+
+    public static void iniciarClassificacao(Scanner scanner, List<Paciente> pacientes) {
+
+
+        System.out.println("\nPacientes disponíveis:");
+        for (Paciente p : pacientes) {
+            System.out.println("ID: " + p.getId() + " | Nome: " + p.getNome());
+        }
+
+        System.out.print("Introduza o ID do paciente a classificar: ");
+        int idEscolhido = scanner.nextInt();
+        scanner.nextLine();
+
+        Paciente pacienteEscolhido = null;
+        for (Paciente p : pacientes) {
+            if (p.getId() == idEscolhido) {
+                pacienteEscolhido = p;
+            }
+        }
+
+        if (pacienteEscolhido == null) {
+            System.out.println("Paciente com o ID introduzido não foi encontrado.");
+        } else {
+            String resultado = classificarPaciente(pacienteEscolhido);
+            System.out.println("\nResultado da Classificação:");
+            System.out.println(resultado);
+        }
+    }
+
     public static String classificarPaciente(Paciente paciente) {
 
         // Criar um String que alerta se houver Sinais Vitais em falta para serem analisádos
