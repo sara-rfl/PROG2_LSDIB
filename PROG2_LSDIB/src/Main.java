@@ -20,7 +20,27 @@ public class Main {
 
         criarPacienteTeste();
 
-       menuInicio(scanner);
+        menuInicio(scanner);
+    }
+    //metodo de ordenacao dos pacientes
+    public static void ordenarPacientes(List<Paciente> pacientes) {
+        int n = pacientes.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (pacientes.get(j).compareTo(pacientes.get(j + 1)) > 0) {
+
+                    Paciente temp = pacientes.get(j);
+                    pacientes.set(j, pacientes.get(j + 1));
+                    pacientes.set(j + 1, temp);
+                }
+            }
+        }
+    }
+
+    public static void mostrarPacientes(List<Paciente> pacientes) {
+        for (Paciente p : pacientes) {
+            System.out.println(p);
+        }
     }
 
     public static void registoNovoPaciente (Scanner scanner) {
@@ -48,7 +68,7 @@ public class Main {
         p1.addSaturacaoOxigenio(98.0, LocalDateTime.of(2024, 3, 9, 18, 20));
         pacientes.add(p1);
 
-        Paciente p2 = new Paciente("Pablo Caetano", "25/06/2009", 1.89, 90, GestorPacientes.gerarNovoId());
+        Paciente p2 = new Paciente("Pablo Caetano", "22/06/2009", 1.89, 90, GestorPacientes.gerarNovoId());
         p2.addFrequenciaCardiaca(79, LocalDateTime.of(2024, 3, 8, 12, 10));
         p2.addFrequenciaCardiaca(99, LocalDateTime.of(2024, 3, 9, 16, 45));
         p2.addTemperatura(37.9, LocalDateTime.of(2024, 3, 8, 12, 30));
@@ -114,8 +134,9 @@ public class Main {
             System.out.println("\nEscolha uma opção:");
             System.out.println("1 - Registar Paciente");
             System.out.println("2 - Cálculo de Medidas de Sumário");
-            System.out.println("3- Classificação de Sinais Vitais");
-            System.out.println("4- Sair");
+            System.out.println("3 - Classificação de Sinais Vitais");
+            System.out.println("4 - Lista de Pacientes por Data de Nascimento");
+            System.out.println("5 - Sair");
             int opcao = scanner.nextInt();
             scanner.nextLine();
 
@@ -127,6 +148,9 @@ public class Main {
                 System.out.println("\n || CLASSIFICAÇÃO DE PACIENTES || ");
                 ClassificadorPaciente.iniciarClassificacao(scanner, pacientes);
             } else if (opcao == 4) {
+                ordenarPacientes(pacientes);
+                mostrarPacientes(pacientes);
+            } else if (opcao == 5) {
                 System.out.println("A sair...");
                 continuarMenu = false;
             } else {
@@ -150,15 +174,15 @@ public class Main {
 
             if (opcaoMenu == 1) {
                 if(selecionarPeriodoDeAnalise(scanner)){
-                GestorPacientes.calcularMedidasPaciente(scanner, pacientes);
+                    GestorPacientes.calcularMedidasPaciente(scanner, pacientes);
                 }
             } else if (opcaoMenu == 2) {
                 if(selecionarPeriodoDeAnalise(scanner)){
-                GestorPacientes.calcularMedidasGrupo(scanner, pacientes);
+                    GestorPacientes.calcularMedidasGrupo(scanner, pacientes);
                 }
             } else if (opcaoMenu == 3) {
                 if(selecionarPeriodoDeAnalise(scanner)){
-                GestorPacientes.calcularMedidasTodos(pacientes);
+                    GestorPacientes.calcularMedidasTodos(pacientes);
                 }
             } else if (opcaoMenu == 4) {
                 System.out.println("A sair...");
@@ -170,7 +194,7 @@ public class Main {
         }
     }
 
-//    public static void menuDadosEstatisticos(Scanner scanner) {
+    //    public static void menuDadosEstatisticos(Scanner scanner) {
 //        boolean continuarMenu = true;
 //        while (continuarMenu) {
 //            System.out.println("\nEscolha uma opção:");
