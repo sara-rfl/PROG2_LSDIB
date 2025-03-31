@@ -13,7 +13,7 @@ public class GestorPacientes {
         int indice = scanner.nextInt();
         if (indice >= 0 && indice < pacientes.size()) {
             Paciente paciente = pacientes.get(indice);
-            System.out.println("\nCalculando medidas para o paciente: " + paciente.getNome());
+            System.out.println("\nA calcular medidas para o paciente: " + paciente.getNome());
 
             List<Double> frequenciasCardiacas = paciente.getFrequenciasCardiacas();
             List<Double> temperaturas = paciente.getTemperaturas();
@@ -35,7 +35,7 @@ public class GestorPacientes {
 
         if (inicio >= 0 && fim < pacientes.size() && inicio <= fim) {
             List<Paciente> grupo = pacientes.subList(inicio, fim + 1);
-            System.out.println("\nCalculando medidas para o grupo de pacientes requisitado.");
+            System.out.println("\nA calcular medidas para o grupo de pacientes requisitado.");
 
             List<Double> frequenciasCardiacas = new ArrayList<>();
             List<Double> temperaturas = new ArrayList<>();
@@ -53,7 +53,7 @@ public class GestorPacientes {
     }
 
     public static void calcularMedidasTodos(List<Paciente> pacientes) {
-        System.out.println("\nCalculando medidas para todos os pacientes registados.");
+        System.out.println("\nA calcular medidas para todos os pacientes registados.");
 
         List<Double> frequenciasCardiacas = new ArrayList<>();
         List<Double> temperaturas = new ArrayList<>();
