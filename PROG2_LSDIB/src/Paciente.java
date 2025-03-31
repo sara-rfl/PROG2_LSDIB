@@ -2,7 +2,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Paciente extends Pessoa implements Comparable<Paciente> {
+
+public class Paciente extends Pessoa implements Comparable<Paciente>, Classificavel {
+
+
 
     private List<Double> frequenciasCardiacas = new ArrayList<>();
     private List<LocalDateTime> datasFrequencia = new ArrayList<>();
@@ -16,6 +19,7 @@ public class Paciente extends Pessoa implements Comparable<Paciente> {
     public Paciente(String nome, String dataDeNascimento, double altura, double peso, int id) {
         super(nome, dataDeNascimento, altura, peso, id);
     }
+
 
     public void addFrequenciaCardiaca(double frequencia, LocalDateTime data) {
         if (frequencia >= Main.FREQUENCIA_CARDIACA_MIN && frequencia <= Main.FREQUENCIA_CARDIACA_MAX) {
@@ -65,5 +69,13 @@ public class Paciente extends Pessoa implements Comparable<Paciente> {
     @Override
     public int compareTo(Paciente outro) {
         return this.getDataDeNascimento().compareTo(outro.getDataDeNascimento());
+    }
+
+    @Override
+    public String getClassificacao() {
+        if (frequenciasCardiacas.isEmpty() || temperaturas.isEmpty() || saturacoesOxigenio.isEmpty()) {
+            return "Sem dados suficientes";
+    }
+        return ClassificadorPaciente.classificarPaciente(this);
     }
 }

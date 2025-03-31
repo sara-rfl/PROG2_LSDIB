@@ -1,12 +1,18 @@
-public class Pessoa {
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public class Pessoa implements PessoaInterface, OrdenavelPorData {
+
+    private static final DateTimeFormatter FORMATADOR = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
     private String nome;
-    private String dataDeNascimento;
+    private LocalDate dataDeNascimento;
     private double altura;
     private double peso;
     private int id;
 
     public Pessoa(String nome, String dataDeNascimento,  double altura, double peso, int id) {
-        this.dataDeNascimento = dataDeNascimento;
+        this.dataDeNascimento = LocalDate.parse(dataDeNascimento, FORMATADOR);
         this.nome = nome;
         this.altura = altura;
         this.peso = peso;
@@ -19,16 +25,21 @@ public class Pessoa {
         return nome;
     }
 
+    @Override
+    public LocalDate getDataNascimento() {
+        return dataDeNascimento;
+    }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public String getDataDeNascimento() {
+    public LocalDate getDataDeNascimento() {
         return dataDeNascimento;
     }
 
     public void setDataDeNascimento(String dataDeNascimento) {
-        this.dataDeNascimento = dataDeNascimento;
+        this.dataDeNascimento = LocalDate.parse(dataDeNascimento, FORMATADOR);
     }
 
     public double getAltura() {
@@ -54,5 +65,10 @@ public class Pessoa {
 
     public String toString() {
         return String.format("Pessoa: %s, ID: %d, Data de Nascimento: %s, Altura: %.2f, Peso: %.2f", nome, id, dataDeNascimento, altura, peso);
+    }
+
+    @Override
+    public LocalDate getDataReferencia() {
+        return dataDeNascimento;
     }
 }

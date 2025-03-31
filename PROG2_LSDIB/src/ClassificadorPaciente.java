@@ -33,33 +33,6 @@ public class ClassificadorPaciente {
 
     public static String classificarPaciente(Paciente paciente) {
 
-        // Criar um String que alerta se houver Sinais Vitais em falta para serem analisádos
-        StringBuilder aviso = new StringBuilder();
-        // Regista se os Sinais estão presentes ou não
-        boolean dadosInsuficientes = false;
-
-        // Aparece sinal de aviso, caso as Frequências Cardíacas não tiverem registadas
-        if (paciente.getFrequenciasCardiacas().isEmpty()) {
-            aviso.append("ATENÇÃO: Um dos sinais vitais não apresenta valores registados para classificação --> Frequências Cardíacas.\n");
-            dadosInsuficientes = true;
-        }
-        // Aparece sinal de aviso, caso as Temperatura não tiverem registadas
-        if (paciente.getTemperaturas().isEmpty()) {
-            aviso.append("ATENÇÃO: Um dos sinais vitais não apresenta valores registados para classificação --> Temperaturas.\n");
-            dadosInsuficientes = true;
-        }
-
-        // Aparece sinal de aviso, caso a Saturação do Oxigénio não tiverem registadas
-        if (paciente.getSaturacoesOxigenio().isEmpty()) {
-            aviso.append("ATENÇÃO: Um dos sinais vitais não apresenta valores registados para classificação --> Saturações de Oxigénio.\n");
-            dadosInsuficientes = true;
-        }
-
-        // Exibe as mensagens de aviso se houver dados insuficientes
-        if (dadosInsuficientes) {
-            System.out.println(aviso.toString());
-        }
-
 
         // Se todos os dados estiverem presentes, proceder com a classificação
         double ultimaFrequencia = paciente.getFrequenciasCardiacas().get(paciente.getFrequenciasCardiacas().size() - 1);
