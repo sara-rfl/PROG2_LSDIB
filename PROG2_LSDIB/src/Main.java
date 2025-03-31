@@ -23,22 +23,6 @@ public class Main {
        menuInicio(scanner);
     }
 
-    public static void registoNovoPaciente (Scanner scanner) {
-        System.out.println("\n || REGISTO DE NOVOS PACIENTES ||");
-        boolean continuar = true;
-        while (continuar) {
-            System.out.println("Adicionar novo paciente? (s/n) ");
-            String opcao = scanner.next().toLowerCase();
-            if (opcao.equals("s")) {
-                Paciente paciente = criarPaciente(scanner);
-                pacientes.add(paciente);
-                inserirSinaisVinais(scanner, paciente);
-            } else {
-                continuar = false;
-            }
-        }
-    }
-
     public static void criarPacienteTeste() {
         Paciente p1 = new Paciente("João Rodrigues", "25/06/2009", 1.78, 69, GestorPacientes.gerarNovoId());
         p1.addFrequenciaCardiaca(72, LocalDateTime.of(2024, 3, 10, 14, 30));
@@ -57,8 +41,50 @@ public class Main {
         pacientes.add(p2);
     }
 
+    public static void menuInicio(Scanner scanner) {
+        boolean continuarMenu = true;
+        while (continuarMenu) {
+            System.out.println("\n || BEM-VINDO, UTILIZADOR. MONITORIZAÇÃO DE UCI|| ");
+            System.out.println("\nEscolha uma opção:");
+            System.out.println("1 - Registar Paciente");
+            System.out.println("2 - Cálculo de Medidas de Sumário");
+            System.out.println("3- Classificação de Sinais Vitais");
+            System.out.println("4- Sair");
+            int opcao = scanner.nextInt();
+            scanner.nextLine();
 
+            if (opcao == 1) {
+                registoNovoPaciente(scanner);
+            } else if (opcao == 2) {
+                menuMedidasSumario(scanner);
+            } else if (opcao == 3) {
+                System.out.println("\n || CLASSIFICAÇÃO DE PACIENTES || ");
+                ClassificadorPaciente.iniciarClassificacao(scanner, pacientes);
+            } else if (opcao == 4) {
+                System.out.println("A sair...");
+                continuarMenu = false;
+            } else {
+                System.out.println("Opção inválida. Tente novamente.");
+            }
 
+        }
+    }
+
+    public static void registoNovoPaciente (Scanner scanner) {
+        System.out.println("\n || REGISTO DE NOVOS PACIENTES ||");
+        boolean continuar = true;
+        while (continuar) {
+            System.out.println("Adicionar novo paciente? (s/n) ");
+            String opcao = scanner.next().toLowerCase();
+            if (opcao.equals("s")) {
+                Paciente paciente = criarPaciente(scanner);
+                pacientes.add(paciente);
+                inserirSinaisVinais(scanner, paciente);
+            } else {
+                continuar = false;
+            }
+        }
+    }
     public static Paciente criarPaciente(Scanner scanner) {
         scanner.nextLine();
         System.out.println("Introduza os dados do paciente: ");
@@ -107,35 +133,6 @@ public class Main {
         } while (valor > 0);
     }
 
-    public static void menuInicio(Scanner scanner) {
-        boolean continuarMenu = true;
-        while (continuarMenu) {
-            System.out.println("\n || BEM-VINDO, UTILIZADOR. MONITORIZAÇÃO DE UCI|| ");
-            System.out.println("\nEscolha uma opção:");
-            System.out.println("1 - Registar Paciente");
-            System.out.println("2 - Cálculo de Medidas de Sumário");
-            System.out.println("3- Classificação de Sinais Vitais");
-            System.out.println("4- Sair");
-            int opcao = scanner.nextInt();
-            scanner.nextLine();
-
-            if (opcao == 1) {
-                registoNovoPaciente(scanner);
-            } else if (opcao == 2) {
-                menuMedidasSumario(scanner);
-            } else if (opcao == 3) {
-                System.out.println("\n || CLASSIFICAÇÃO DE PACIENTES || ");
-                ClassificadorPaciente.iniciarClassificacao(scanner, pacientes);
-            } else if (opcao == 4) {
-                System.out.println("A sair...");
-                continuarMenu = false;
-            } else {
-                System.out.println("Opção inválida. Tente novamente.");
-            }
-
-        }
-    }
-
     public static void menuMedidasSumario(Scanner scanner) {
         boolean continuarMenu = true;
         while (continuarMenu) {
@@ -169,38 +166,6 @@ public class Main {
 
         }
     }
-
-//    public static void menuDadosEstatisticos(Scanner scanner) {
-//        boolean continuarMenu = true;
-//        while (continuarMenu) {
-//            System.out.println("\nEscolha uma opção:");
-//            System.out.println("1 - Calcular medidas de sumário para um paciente");
-//            System.out.println("2 - Calcular medidas de sumário para um grupo de pacientes");
-//            System.out.println("3 - Calcular medidas de sumário para todos os pacientes");
-//            System.out.println("4 - Sair");
-//            int opcaoMenu = scanner.nextInt();
-//            scanner.nextLine();
-//
-//            if (opcaoMenu == 1) {
-//                if(selecionarPeriodoDeAnalise(scanner)){
-//                GestorPacientes.calcularMedidasPaciente(scanner, pacientes);
-//                }
-//            } else if (opcaoMenu == 2) {
-//                if(selecionarPeriodoDeAnalise(scanner)){
-//                GestorPacientes.calcularMedidasGrupo(scanner, pacientes);
-//                }
-//            } else if (opcaoMenu == 3) {
-//                if(selecionarPeriodoDeAnalise(scanner)){
-//                GestorPacientes.calcularMedidasTodos(pacientes);
-//                }
-//            } else if (opcaoMenu == 4) {
-//                System.out.println("A sair...");
-//                continuarMenu = false;
-//            } else {
-//                System.out.println("Opção inválida. Tente novamente.");
-//            }
-//        }
-//    }
     public static boolean selecionarPeriodoDeAnalise(Scanner scanner) {
 
         System.out.print("Digite a data de início (dd/mm/aaaa): ");

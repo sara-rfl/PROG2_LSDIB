@@ -2,8 +2,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Paciente extends Pessoa implements Comparable<Paciente> {
-
+public class Paciente extends Pessoa {
     private List<Double> frequenciasCardiacas = new ArrayList<>();
     private List<LocalDateTime> datasFrequencia = new ArrayList<>();
 
@@ -60,10 +59,5 @@ public class Paciente extends Pessoa implements Comparable<Paciente> {
 
     public List<LocalDateTime> getDatasSaturacao() {
         return datasSaturacao;
-    }
-
-    @Override
-    public int compareTo(Paciente outro) {
-        return this.getDataDeNascimento().compareTo(outro.getDataDeNascimento());
     }
 }
