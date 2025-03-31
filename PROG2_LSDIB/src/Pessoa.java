@@ -13,8 +13,6 @@ public class Pessoa {
         this.id = id;
     }
 
-    //Faço construtor vazio?
-
     public String getNome() {
         return nome;
     }
