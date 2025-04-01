@@ -2,7 +2,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Paciente extends Pessoa {
+
     private List<Double> frequenciasCardiacas = new ArrayList<>();
     private List<LocalDateTime> datasFrequencia = new ArrayList<>();
 
@@ -15,6 +17,7 @@ public class Paciente extends Pessoa {
     public Paciente(String nome, String dataDeNascimento, double altura, double peso, int id) {
         super(nome, dataDeNascimento, altura, peso, id);
     }
+
 
     public void addFrequenciaCardiaca(double frequencia, LocalDateTime data) {
         if (frequencia >= Main.FREQUENCIA_CARDIACA_MIN && frequencia <= Main.FREQUENCIA_CARDIACA_MAX) {
@@ -60,4 +63,5 @@ public class Paciente extends Pessoa {
     public List<LocalDateTime> getDatasSaturacao() {
         return datasSaturacao;
     }
+
 }

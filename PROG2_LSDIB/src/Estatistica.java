@@ -1,7 +1,16 @@
 import java.util.List;
 
-public class Estatistica {
-    public static double calcularMedia(List<Double> valores) {
+public class Estatistica implements EstatisticaVital {
+
+    private List<Double> valores;
+
+    public Estatistica(List<Double> valores) {
+        this.valores = valores;
+    }
+
+
+    @Override
+    public double calcularMedia() {
         if (valores.isEmpty()) return 0;
         double soma = 0;
         for (double valor : valores) {
@@ -10,9 +19,10 @@ public class Estatistica {
         return soma / valores.size();
     }
 
-    public static double calcularDesvioPadrao(List<Double> valores) {
+    @Override
+    public double calcularDesvioPadrao() {
         if (valores.size() < 2) return 0;
-        double media = calcularMedia(valores);
+        double media = calcularMedia();
         double somaQuadrados = 0;
         for (double valor : valores) {
             somaQuadrados += Math.pow(valor - media, 2);
@@ -20,7 +30,8 @@ public class Estatistica {
         return Math.sqrt(somaQuadrados / valores.size());
     }
 
-    public static double calcularMinimo(List<Double> valores) {
+    @Override
+    public double calcularMin() {
         if (valores.isEmpty()) return 0;
         double minimo = valores.get(0);
         for (double valor : valores) {
@@ -31,7 +42,8 @@ public class Estatistica {
         return minimo;
     }
 
-    public static double calcularMaximo(List<Double> valores) {
+    @Override
+    public double calcularMax() {
         if (valores.isEmpty()) return 0;
         double maximo = valores.get(0);
         for (double valor : valores) {
@@ -41,4 +53,5 @@ public class Estatistica {
         }
         return maximo;
     }
+
 }
