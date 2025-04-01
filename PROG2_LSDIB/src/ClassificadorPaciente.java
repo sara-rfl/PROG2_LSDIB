@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,30 +21,8 @@ public class ClassificadorPaciente {
 
     public static void iniciarClassificacao(Scanner scanner, List<Paciente> pacientes) {
 
+        processarResultado(scanner);
 
-        System.out.println("\nPacientes disponíveis:");
-        for (Paciente p : pacientes) {
-            System.out.println("ID: " + p.getId() + " | Nome: " + p.getNome());
-        }
-
-        System.out.print("Introduza o ID do paciente a classificar: ");
-        int idEscolhido = scanner.nextInt();
-        scanner.nextLine();
-
-        Paciente pacienteEscolhido = null;
-        for (Paciente p : pacientes) {
-            if (p.getId() == idEscolhido) {
-                pacienteEscolhido = p;
-            }
-        }
-
-        if (pacienteEscolhido == null) {
-            System.out.println("Paciente com o ID introduzido não foi encontrado.");
-        } else {
-            String resultado = classificarPaciente(pacienteEscolhido);
-            System.out.println("\nResultado da Classificação:");
-            System.out.println(resultado);
-        }
     }
 
     public static String classificarPaciente(Paciente paciente) {
@@ -82,6 +61,20 @@ public class ClassificadorPaciente {
         }
 
         return classificacao.toString();
+    }
+
+    public static void processarResultado(Scanner scanner){
+    Paciente paciente = GestorPacientes.selecionarPaciente(scanner, Main.pacientes);
+        if (paciente != null) {
+        if (PeriodoAnalise.selecionarPeriodoDeAnalise(scanner, paciente)) {
+            List<Paciente> listaPaciente = new ArrayList<>();
+            listaPaciente.add(paciente);
+            System.out.println("\nPaciente selecionado com sucesso!");
+        }
+            String resultado = classificarPaciente(paciente);
+            System.out.println("\nResultado da Classificação:");
+            System.out.println(resultado);
+        }
     }
 }
 
