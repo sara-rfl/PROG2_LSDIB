@@ -30,7 +30,7 @@ public class PeriodoAnalise {
         }
     }
 
-    public static boolean selecionarPeriodoDeAnalise(Scanner scanner, Paciente paciente) {
+    public static boolean selecionarPeriodoDeAnalisePaciente(Scanner scanner, Paciente paciente) {
         while (true) {
             LocalDate[] periodo = obterPeriodoDeAnalise(scanner);
             LocalDate dataInicio = periodo[0];
@@ -44,7 +44,7 @@ public class PeriodoAnalise {
         }
     }
 
-    public static boolean selecionarPeriodoDeAnalise(Scanner scanner, List<Paciente> pacientesSelecionados) {
+    public static boolean selecionarPeriodoDeAnaliseGrupo(Scanner scanner, List<Paciente> pacientesSelecionados) {
         while (true) {
             LocalDate[] periodo = obterPeriodoDeAnalise(scanner);
             LocalDate dataInicio = periodo[0];

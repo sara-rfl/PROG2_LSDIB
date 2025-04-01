@@ -1,4 +1,3 @@
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -77,10 +76,10 @@ public class GestorPacientes {
     public static void processarMedidasPaciente(Scanner scanner) {
         Paciente paciente = GestorPacientes.selecionarPaciente(scanner, Main.pacientes);
         if (paciente != null) {
-            if (PeriodoAnalise.selecionarPeriodoDeAnalise(scanner, paciente)) {
+            if (PeriodoAnalise.selecionarPeriodoDeAnalisePaciente(scanner, paciente)) {
                 List<Paciente> listaPaciente = new ArrayList<>();
                 listaPaciente.add(paciente);
-                Main.menuSinaisVitais(scanner, listaPaciente);
+                Menu.sinaisVitais(scanner, listaPaciente);
             }
         }
     }
@@ -88,15 +87,15 @@ public class GestorPacientes {
     public static void processarMedidasGrupo(Scanner scanner) {
         List<Paciente> grupo = GestorPacientes.selecionarGrupoPacientes(scanner, Main.pacientes);
         if (!grupo.isEmpty()) {
-            if (PeriodoAnalise.selecionarPeriodoDeAnalise(scanner, grupo)) {
-                Main.menuSinaisVitais(scanner, grupo);
+            if (PeriodoAnalise.selecionarPeriodoDeAnaliseGrupo(scanner, grupo)) {
+                Menu.sinaisVitais(scanner, grupo);
             }
         }
     }
 
     public static void processarMedidasTodos(Scanner scanner) {
-        if (PeriodoAnalise.selecionarPeriodoDeAnalise(scanner, Main.pacientes)) {
-            Main.menuSinaisVitais(scanner, Main.pacientes);
+        if (PeriodoAnalise.selecionarPeriodoDeAnaliseGrupo(scanner, Main.pacientes)) {
+            Menu.sinaisVitais(scanner, Main.pacientes);
         }
     }
 
