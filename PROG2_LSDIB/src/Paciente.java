@@ -3,9 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Paciente extends Pessoa implements Comparable<Paciente>, Classificavel {
-
-
+public class Paciente extends Pessoa {
 
     private List<Double> frequenciasCardiacas = new ArrayList<>();
     private List<LocalDateTime> datasFrequencia = new ArrayList<>();
@@ -66,16 +64,4 @@ public class Paciente extends Pessoa implements Comparable<Paciente>, Classifica
         return datasSaturacao;
     }
 
-    @Override
-    public int compareTo(Paciente outro) {
-        return this.getDataDeNascimento().compareTo(outro.getDataDeNascimento());
-    }
-
-    @Override
-    public String getClassificacao() {
-        if (frequenciasCardiacas.isEmpty() || temperaturas.isEmpty() || saturacoesOxigenio.isEmpty()) {
-            return "Sem dados suficientes";
-    }
-        return ClassificadorPaciente.classificarPaciente(this);
-    }
 }
