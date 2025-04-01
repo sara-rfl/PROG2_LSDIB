@@ -59,8 +59,8 @@ public class Main {
                 System.out.println("\n || CLASSIFICAÇÃO DE PACIENTES || ");
                 ClassificadorPaciente.iniciarClassificacao(scanner, pacientes);
             } else if (opcao == 4) {
-                // Listas.ordenarPacientes(pacientes);
-                //Listas.mostrarPacientes(pacientes);
+                Listas.ordenarPacientes(pacientes);
+                Listas.mostrarPacientes(pacientes);
             } else if (opcao == 5) {
                 System.out.println("A sair...");
                 continuarMenu = false;
