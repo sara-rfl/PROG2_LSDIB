@@ -66,7 +66,7 @@ public class ClassificadorPaciente {
     public static void processarResultado(Scanner scanner){
     Paciente paciente = GestorPacientes.selecionarPaciente(scanner, Main.pacientes);
         if (paciente != null) {
-        if (PeriodoAnalise.selecionarPeriodoDeAnalise(scanner, paciente)) {
+        if (PeriodoAnalise.selecionarPeriodoDeAnalisePaciente(scanner, paciente)) {
             List<Paciente> listaPaciente = new ArrayList<>();
             listaPaciente.add(paciente);
             System.out.println("\nPaciente selecionado com sucesso!");
