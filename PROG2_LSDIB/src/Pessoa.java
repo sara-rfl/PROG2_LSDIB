@@ -19,8 +19,6 @@ public class Pessoa implements PessoaInterface, OrdenavelPorData {
         this.id = id;
     }
 
-    //Faço construtor vazio?
-
     public String getNome() {
         return nome;
     }
