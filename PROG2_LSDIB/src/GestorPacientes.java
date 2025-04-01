@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GestorPacientes {
-
     // cria um novo int com IDs dos pacientes, começando no 1000 ("Paciente Zero" = ID:1000)
     private static int currentId = 1000;
 
@@ -12,91 +11,42 @@ public class GestorPacientes {
         return currentId++;
     }
 
-    public static void calcularMedidasPaciente(Scanner scanner, List<Paciente> pacientes) {
-        mostrarLista(pacientes);
-        System.out.print("Escolha o paciente (ID): ");
-        int idEscolhido = scanner.nextInt();
-
-        Paciente pacienteEscolhido = null;
-        for (Paciente paciente : pacientes) {
-            if (paciente.getId() == idEscolhido) {
-                pacienteEscolhido = paciente;
-                break;
-            }
-        }
-        if (pacienteEscolhido != null) {
-            System.out.println("\nCalculando medidas para o paciente " + pacienteEscolhido.getId() + ": " + pacienteEscolhido.getNome());
-
-            List<Double> frequenciasCardiacas = pacienteEscolhido.getFrequenciasCardiacas();
-            List<Double> temperaturas = pacienteEscolhido.getTemperaturas();
-            List<Double> saturacoesOxigenio = pacienteEscolhido.getSaturacoesOxigenio();
-
-            imprimirMedidas(frequenciasCardiacas, temperaturas, saturacoesOxigenio);
-        } else {
-            System.out.println("ID inválido.");
-        }
-    }
-
-
-    public static void calcularMedidasGrupo(Scanner scanner, List<Paciente> pacientes) {
-        mostrarLista(pacientes);
-        System.out.print("Escolha o grupo de pacientes (início e fim separados por espaço): ");
-        String line = scanner.nextLine();
-        String[] IDs = line.split(" ");
-
-        List<Double> frequenciasCardiacas = new ArrayList<>();
-        List<Double> temperaturas = new ArrayList<>();
-        List<Double> saturacoesOxigenio = new ArrayList<>();
-
-        for (int i = 0; i < IDs.length; i++) {
-            int id = 0;
-            boolean IDValido = true; // Assume o ID como válido
-
-            // Verificar se o input é um ID (indice)
-            for (int j = 0; j < IDs[i].length(); j++) {
-                char c = IDs[i].charAt(j);
-                if (c < '0' || c > '9') {
-                    IDValido = false; // Se ID for consituido por outros caractéres que não números, o input é considderado inválido
-                }
-            }
-            if (IDValido) {
-                id = Integer.parseInt(IDs[i]);
-                Paciente pacienteEscolhido = null;
-
-                for (int j = 0; j < pacientes.size(); j++) {
-                    if (pacientes.get(j).getId() == id) {
-                        pacienteEscolhido = pacientes.get(j);
-                    }
-                }
-
-                if (pacienteEscolhido != null) {
-                    frequenciasCardiacas.addAll(pacienteEscolhido.getFrequenciasCardiacas());
-                    temperaturas.addAll(pacienteEscolhido.getTemperaturas());
-                    saturacoesOxigenio.addAll(pacienteEscolhido.getSaturacoesOxigenio());
-                } else {
-                    System.out.println("ID inválido: " + id);
-                }
-            } else {
-                System.out.println("ID inválido: " + IDs[i]);
-            }
-        }
-        imprimirMedidas(frequenciasCardiacas, temperaturas, saturacoesOxigenio);
-    }
-
-    public static void calcularMedidasTodos(List<Paciente> pacientes) {
-        System.out.println("\nCalculando medidas para todos os pacientes registados.");
-
-        List<Double> frequenciasCardiacas = new ArrayList<>();
-        List<Double> temperaturas = new ArrayList<>();
-        List<Double> saturacoesOxigenio = new ArrayList<>();
+    public static Paciente selecionarPaciente(Scanner scanner, List<Paciente> pacientes) {
+        System.out.println("Selecione um paciente:");
+        GestorPacientes.mostrarLista(pacientes);
+        System.out.print("Introduza o ID do paciente: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
 
         for (Paciente paciente : pacientes) {
-            frequenciasCardiacas.addAll(paciente.getFrequenciasCardiacas());
-            temperaturas.addAll(paciente.getTemperaturas());
-            saturacoesOxigenio.addAll(paciente.getSaturacoesOxigenio());
+            if (paciente.getId() == id) {
+                return paciente;
+            }
         }
-        imprimirMedidas(frequenciasCardiacas, temperaturas, saturacoesOxigenio);
+        System.out.println("Paciente não encontrado.");
+        return null;
     }
+
+    public static List<Paciente> selecionarGrupoPacientes(Scanner scanner, List<Paciente> pacientes) {
+        System.out.println("Selecione um grupo de pacientes (IDs separados por espaço):");
+        GestorPacientes.mostrarLista(pacientes);
+        System.out.print("Introduza os IDs: ");
+
+        String[] ids = scanner.nextLine().split(" ");
+        List<Paciente> selecionados = new ArrayList<>();
+
+        for (String idStr : ids) {
+            int id = Integer.parseInt(idStr);
+            for (Paciente paciente : pacientes) {
+                if (paciente.getId() == id) {
+                    selecionados.add(paciente);
+                }
+            }
+        } if (selecionados.isEmpty()) {
+            System.out.println("Nenhum paciente encontrado.");
+        } return selecionados;
+    }
+
 
     public static void mostrarLista (List<Paciente> pacientes) {
         System.out.println("\nLista de Pacientes:");
@@ -105,20 +55,49 @@ public class GestorPacientes {
         }
     }
 
-    public static void imprimirMedidas(List<Double> frequenciasCardiacas, List<Double> temperaturas, List<Double> saturacoesOxigenio) {
-        System.out.println("\nDados:");
-        calcularMedidas("Frequência Cardíaca", frequenciasCardiacas);
-        calcularMedidas("Temperatura", temperaturas);
-        calcularMedidas("Saturação de Oxigênio", saturacoesOxigenio);
-    }
-
-
-    public static void calcularMedidas(String sinalVital, List<Double> valores) {
+    public static void imprimirMedidas(String sinalVital, List<Double> valores) {
         Estatistica estatistica = new Estatistica(valores);
+        System.out.println("\nDados para " + sinalVital + ":");
         System.out.println("Média da " + sinalVital + ": " + String.format("%.2f", estatistica.calcularMedia()));
         System.out.println("Desvio Padrão da " + sinalVital + ": " + String.format("%.2f", estatistica.calcularDesvioPadrao()));
         System.out.println("Mínimo da " + sinalVital + ": " + String.format("%.2f", estatistica.calcularMin()));
         System.out.println("Máximo da " + sinalVital + ": " + String.format("%.2f", estatistica.calcularMax()));
+    }
+
+    public static void imprimirMedidasSelecionadas(String sinalVital, List<Double> valores) {
+        if (sinalVital.equals("Frequência Cardíaca")) {
+            imprimirMedidas("Frequência Cardíaca", valores);
+        } else if (sinalVital.equals("Temperatura")) {
+            imprimirMedidas("Temperatura", valores);
+        } else if (sinalVital.equals("Saturação de Oxigênio")) {
+            imprimirMedidas("Saturação de Oxigênio", valores);
+        }
+    }
+
+    public static void processarMedidasPaciente(Scanner scanner) {
+        Paciente paciente = GestorPacientes.selecionarPaciente(scanner, Main.pacientes);
+        if (paciente != null) {
+            if (PeriodoAnalise.selecionarPeriodoDeAnalise(scanner, paciente)) {
+                List<Paciente> listaPaciente = new ArrayList<>();
+                listaPaciente.add(paciente);
+                Main.menuSinaisVitais(scanner, listaPaciente);
+            }
+        }
+    }
+
+    public static void processarMedidasGrupo(Scanner scanner) {
+        List<Paciente> grupo = GestorPacientes.selecionarGrupoPacientes(scanner, Main.pacientes);
+        if (!grupo.isEmpty()) {
+            if (PeriodoAnalise.selecionarPeriodoDeAnalise(scanner, grupo)) {
+                Main.menuSinaisVitais(scanner, grupo);
+            }
+        }
+    }
+
+    public static void processarMedidasTodos(Scanner scanner) {
+        if (PeriodoAnalise.selecionarPeriodoDeAnalise(scanner, Main.pacientes)) {
+            Main.menuSinaisVitais(scanner, Main.pacientes);
+        }
     }
 
 }

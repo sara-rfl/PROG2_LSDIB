@@ -17,10 +17,8 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
         criarPacienteTeste();
-
-       menuInicio(scanner);
+        menuInicio(scanner);
     }
 
     public static void criarPacienteTeste() {
@@ -32,7 +30,7 @@ public class Main {
         p1.addSaturacaoOxigenio(98.0, LocalDateTime.of(2024, 3, 9, 18, 20));
         pacientes.add(p1);
 
-        Paciente p2 = new Paciente("Pablo Caetano", "25/06/2009", 1.89, 90, GestorPacientes.gerarNovoId());
+        Paciente p2 = new Paciente("Pablo Caetano", "05/06/2001", 1.89, 90, GestorPacientes.gerarNovoId());
         p2.addFrequenciaCardiaca(79, LocalDateTime.of(2024, 3, 8, 12, 10));
         p2.addFrequenciaCardiaca(99, LocalDateTime.of(2024, 3, 9, 16, 45));
         p2.addTemperatura(37.9, LocalDateTime.of(2024, 3, 8, 12, 30));
@@ -48,8 +46,9 @@ public class Main {
             System.out.println("\nEscolha uma opção:");
             System.out.println("1 - Registar Paciente");
             System.out.println("2 - Cálculo de Medidas de Sumário");
-            System.out.println("3- Classificação de Sinais Vitais");
-            System.out.println("4- Sair");
+            System.out.println("3 - Classificação de Sinais Vitais");
+            System.out.println("4 - Lista de Pacientes por Data de Nascimento");
+            System.out.println("5 - Sair");
             int opcao = scanner.nextInt();
             scanner.nextLine();
 
@@ -61,6 +60,9 @@ public class Main {
                 System.out.println("\n || CLASSIFICAÇÃO DE PACIENTES || ");
                 ClassificadorPaciente.iniciarClassificacao(scanner, pacientes);
             } else if (opcao == 4) {
+                // Listas.ordenarPacientes(pacientes);
+                //Listas.mostrarPacientes(pacientes);
+            } else if (opcao == 5) {
                 System.out.println("A sair...");
                 continuarMenu = false;
             } else {
@@ -70,7 +72,7 @@ public class Main {
         }
     }
 
-    public static void registoNovoPaciente (Scanner scanner) {
+    public static void registoNovoPaciente(Scanner scanner) {
         System.out.println("\n || REGISTO DE NOVOS PACIENTES ||");
         boolean continuar = true;
         while (continuar) {
@@ -104,6 +106,7 @@ public class Main {
         return new Paciente(nome, dataNascimento, altura, peso, id);
     }
 
+
     public static void inserirSinaisVinais(Scanner scanner, Paciente paciente) {
         System.out.println("Introduza os valores de frequência cardíaca (0 para terminar): ");
         double valor;
@@ -111,7 +114,6 @@ public class Main {
             valor = scanner.nextDouble();
             if (valor > 0) {
                 paciente.addFrequenciaCardiaca(valor, LocalDateTime.now());
-                System.out.println("Registado em: " + LocalDateTime.now());
             }
         } while (valor > 0);
 
@@ -120,7 +122,6 @@ public class Main {
             valor = scanner.nextDouble();
             if (valor > 0) {
                 paciente.addTemperatura(valor, LocalDateTime.now());
-                System.out.println("Registado em: " + LocalDateTime.now());
             }
         } while (valor > 0);
 
@@ -129,7 +130,6 @@ public class Main {
             valor = scanner.nextDouble();
             if (valor > 0) {
                 paciente.addSaturacaoOxigenio(valor, LocalDateTime.now());
-                System.out.println("Registado em: " + LocalDateTime.now());
             }
         } while (valor > 0);
     }
@@ -138,87 +138,73 @@ public class Main {
         boolean continuarMenu = true;
         while (continuarMenu) {
             System.out.println("\n || CÁLCULO DE MEDIDAS DE SUMÁRIO ||");
-            System.out.println("\nEscolha uma opção: ");
-            System.out.println("1- Calcular medidas de sumário para um paciente");
-            System.out.println("2- Calcular medidas de sumário para um grupo de pacientes");
-            System.out.println("3- Calcular medidades de sumário para todos os pacientes");
-            System.out.println("4- Sair");
+            System.out.println("\nEscolha uma opção:");
+            System.out.println("1 - Calcular medidas de sumário para um paciente");
+            System.out.println("2 - Calcular medidas de sumário para um grupo de pacientes");
+            System.out.println("3 - Calcular medidas de sumário para todos os pacientes");
+            System.out.println("4 - Sair");
+
             int opcaoMenu = scanner.nextInt();
             scanner.nextLine();
 
             if (opcaoMenu == 1) {
-                if(selecionarPeriodoDeAnalise(scanner)){
-                GestorPacientes.calcularMedidasPaciente(scanner, pacientes);
-                }
+                GestorPacientes.processarMedidasPaciente(scanner);
             } else if (opcaoMenu == 2) {
-                if(selecionarPeriodoDeAnalise(scanner)){
-                GestorPacientes.calcularMedidasGrupo(scanner, pacientes);
-                }
+                GestorPacientes.processarMedidasGrupo(scanner);
             } else if (opcaoMenu == 3) {
-                if(selecionarPeriodoDeAnalise(scanner)){
-                GestorPacientes.calcularMedidasTodos(pacientes);
-                }
+                GestorPacientes.processarMedidasTodos(scanner);
             } else if (opcaoMenu == 4) {
                 System.out.println("A sair...");
                 continuarMenu = false;
             } else {
                 System.out.println("Opção inválida. Tente novamente.");
             }
-
         }
     }
 
-    public static boolean selecionarPeriodoDeAnalise(Scanner scanner) {
+    public static void menuSinaisVitais(Scanner scanner, List<Paciente> pacientes) {
+        int opcao;
+        do {
+            System.out.println("\n--- Menu Sinais Vitais ---");
+            System.out.println("Escolha o sinal vital a analisar:");
+            System.out.println("1. Frequência Cardíaca");
+            System.out.println("2. Oxigénio");
+            System.out.println("3. Temperatura");
+            System.out.println("4. Todas");
+            System.out.println("5. Voltar ao Menu Principal");
+            opcao = scanner.nextInt();
+            scanner.nextLine();
 
-        System.out.print("Digite a data de início (dd/mm/aaaa): ");
-        String dataInicioStr = scanner.nextLine();
-        LocalDate dataInicio = LocalDate.parse(dataInicioStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            if (opcao >= 1 && opcao <= 4) {
+                processarOpcao(opcao, pacientes);
+            } else if (opcao == 5) {
+                System.out.println("A voltar ao menu principal...");
+            } else {
+                System.out.println("Opção inválida. Tente novamente.");
+            }
+        } while (opcao != 5);
+    }
 
-        System.out.print("Digite a data de fim (dd/mm/aaaa): ");
-        String dataFimStr = scanner.nextLine();
-        LocalDate dataFim = LocalDate.parse(dataFimStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    public static void processarOpcao(int opcao, List<Paciente> pacientes) {
+        // Listas para armazenar os sinais vitais de todos os pacientes
+        List<Double> frequenciasCardiacas = new ArrayList<>();
+        List<Double> saturacoesOxigenio = new ArrayList<>();
+        List<Double> temperaturas = new ArrayList<>();
 
-        boolean dadosDisponiveis = false;
-
+        // Percorre a lista de pacientes e adiciona os sinais vitais às listas
         for (Paciente paciente : pacientes) {
-            if (temRegistrosNoIntervalo(paciente, dataInicio, dataFim)) {
-                dadosDisponiveis = true;
-                break;
-            }
+            // Se a opção for 1 ou 4, adiciona os dados de frequência cardíaca
+            if (opcao == 1 || opcao == 4) frequenciasCardiacas.addAll(paciente.getFrequenciasCardiacas());
+            // Se a opção for 2 ou 4, adiciona os dados de saturação
+            if (opcao == 2 || opcao == 4) saturacoesOxigenio.addAll(paciente.getSaturacoesOxigenio());
+            // Se a opção for 3 ou 4, adiciona os dados de temperatura
+            if (opcao == 3 || opcao == 4) temperaturas.addAll(paciente.getTemperaturas());
         }
-        if (dadosDisponiveis) {
-            System.out.println("Calculando medidas de " + dataInicio + " a " + dataFim);
-        } else {
-            System.out.println("Não existem dados para o período selecionado.");
-        }
-        return dadosDisponiveis;
+        // Chama o metodo para imprimir as medidas selecionadas, dependendo da opção escolhida
+        if (opcao == 1 || opcao == 4)
+            GestorPacientes.imprimirMedidasSelecionadas("Frequência Cardíaca", frequenciasCardiacas);
+        if (opcao == 2 || opcao == 4)
+            GestorPacientes.imprimirMedidasSelecionadas("Saturação de Oxigênio", saturacoesOxigenio);
+        if (opcao == 3 || opcao == 4) GestorPacientes.imprimirMedidasSelecionadas("Temperatura", temperaturas);
     }
-
-    public static boolean temRegistrosNoIntervalo(Paciente paciente, LocalDate dataInicio, LocalDate dataFim) {
-        for (LocalDateTime dataRegisto : paciente.getDatasFrequencia()) {
-            LocalDate dataRegistoLocal = dataRegisto.toLocalDate();
-            if ((dataRegistoLocal.isEqual(dataInicio) || dataRegistoLocal.isAfter(dataInicio)) &&
-                    (dataRegistoLocal.isEqual(dataFim) || dataRegistoLocal.isBefore(dataFim))) {
-                return true;
-            }
-        }
-
-        for (LocalDateTime dataRegisto : paciente.getDatasTemperatura()) {
-            LocalDate dataRegistoLocal = dataRegisto.toLocalDate();
-            if ((dataRegistoLocal.isEqual(dataInicio) || dataRegistoLocal.isAfter(dataInicio)) &&
-                    (dataRegistoLocal.isEqual(dataFim) || dataRegistoLocal.isBefore(dataFim))) {
-                return true;
-            }
-        }
-
-        for (LocalDateTime dataRegisto : paciente.getDatasSaturacao()) {
-            LocalDate dataRegistoLocal = dataRegisto.toLocalDate();
-            if ((dataRegistoLocal.isEqual(dataInicio) || dataRegistoLocal.isAfter(dataInicio)) &&
-                    (dataRegistoLocal.isEqual(dataFim) || dataRegistoLocal.isBefore(dataFim))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 }
