@@ -3,6 +3,21 @@ import java.util.Scanner;
 
 public class ClassificadorPaciente {
 
+    // Constantes para os intervalos de FC (em bpm)
+    public static final double FC_NORMAL_MIN = 60.0;
+    public static final double FC_NORMAL_MAX = 100.0;
+    public static final double FC_ATENCAO_MAX = 120.0;
+
+    //Constantes para os intervalos de Temperaturaas (em ºC)
+    public static final double TEMP_NORMAL_MIN = 36.0;
+    public static final double TEMP_NORMAL_MAX = 37.5;
+    public static final double TEMP_ATENCAO_MAX = 38.5;
+
+    //Constantes para os intervalos de Saturação de Oxigénio (em %)
+    public static final double SAT_NORMAL_MIN = 95.0;
+    public static final double SAT_ATENCAO_MIN = 90.0;
+
+
     public static void iniciarClassificacao(Scanner scanner, List<Paciente> pacientes) {
 
 
@@ -33,32 +48,6 @@ public class ClassificadorPaciente {
 
     public static String classificarPaciente(Paciente paciente) {
 
-        // Criar um String que alerta se houver Sinais Vitais em falta para serem analisádos
-        StringBuilder aviso = new StringBuilder();
-        // Regista se os Sinais estão presentes ou não
-        boolean dadosInsuficientes = false;
-
-        // Aparece sinal de aviso, caso as Frequências Cardíacas não tiverem registadas
-        if (paciente.getFrequenciasCardiacas().isEmpty()) {
-            aviso.append("ATENÇÃO: Um dos sinais vitais não apresenta valores registados para classificação --> Frequências Cardíacas.\n");
-            dadosInsuficientes = true;
-        }
-        // Aparece sinal de aviso, caso as Temperatura não tiverem registadas
-        if (paciente.getTemperaturas().isEmpty()) {
-            aviso.append("ATENÇÃO: Um dos sinais vitais não apresenta valores registados para classificação --> Temperaturas.\n");
-            dadosInsuficientes = true;
-        }
-
-        // Aparece sinal de aviso, caso a Saturação do Oxigénio não tiverem registadas
-        if (paciente.getSaturacoesOxigenio().isEmpty()) {
-            aviso.append("ATENÇÃO: Um dos sinais vitais não apresenta valores registados para classificação --> Saturações de Oxigénio.\n");
-            dadosInsuficientes = true;
-        }
-
-        // Exibe as mensagens de aviso se houver dados insuficientes
-        if (dadosInsuficientes) {
-            System.out.println(aviso.toString());
-        }
 
 
         // Se todos os dados estiverem presentes, proceder com a classificação
@@ -68,25 +57,25 @@ public class ClassificadorPaciente {
 
         StringBuilder classificacao = new StringBuilder();
 
-        if (ultimaFrequencia < 60 || ultimaFrequencia > 120) {
+        if (ultimaFrequencia < FC_NORMAL_MIN || ultimaFrequencia > FC_ATENCAO_MAX) {
             classificacao.append("Crítico - Frequência Cardíaca\n");
-        } else if (ultimaFrequencia > 100) {
+        } else if (ultimaFrequencia > FC_NORMAL_MAX) {
             classificacao.append("Atenção - Frequência Cardíaca\n");
         } else {
             classificacao.append("Normal - Frequência Cardíaca\n");
         }
 
-        if (ultimaTemperatura < 36 || ultimaTemperatura > 38.5) {
+        if (ultimaTemperatura < TEMP_NORMAL_MIN || ultimaTemperatura > TEMP_ATENCAO_MAX) {
             classificacao.append("Crítico - Temperatura\n");
-        } else if (ultimaTemperatura > 37.5) {
+        } else if (ultimaTemperatura > TEMP_NORMAL_MAX) {
             classificacao.append("Atenção - Temperatura\n");
         } else {
             classificacao.append("Normal - Temperatura\n");
         }
 
-        if (ultimaSaturacao < 90) {
+        if (ultimaSaturacao < SAT_ATENCAO_MIN) {
             classificacao.append("Crítico - Saturação de Oxigénio\n");
-        } else if (ultimaSaturacao < 95) {
+        } else if (ultimaSaturacao < SAT_NORMAL_MIN) {
             classificacao.append("Atenção - Saturação de Oxigénio\n");
         } else {
             classificacao.append("Normal - Saturação de Oxigénio\n");
