@@ -12,11 +12,13 @@ public class Main {
     public static final double SATURACAO_MIN = 70.0;
     public static final double SATURACAO_MAX = 100.0;
     public static List<Paciente> pacientes = new ArrayList<>();
+    public static List<TecnicoSaude> tecnicos = new ArrayList<>();
 
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         criarPacienteTeste();
+        criarTecnicoTeste();
         menuInicio(scanner);
     }
 
@@ -37,6 +39,13 @@ public class Main {
         p2.addSaturacaoOxigenio(97.0, LocalDateTime.of(2024, 3, 7, 20, 00));
         pacientes.add(p2);
     }
+    public static void criarTecnicoTeste(){
+        TecnicoSaude t1 = new TecnicoSaude("Pietro Alvez", "22/12/1994", "Enfermeiro", GestorPacientes.gerarNovoId());
+        tecnicos.add(t1);
+
+        TecnicoSaude t2 = new TecnicoSaude("Anita Vieira", "12/04/1990", "Médica", GestorPacientes.gerarNovoId());
+        tecnicos.add(t2);
+    }
 
     public static void menuInicio(Scanner scanner) {
         boolean continuarMenu = true;
@@ -47,7 +56,8 @@ public class Main {
             System.out.println("2 - Cálculo de Medidas de Sumário");
             System.out.println("3 - Classificação de Sinais Vitais");
             System.out.println("4 - Lista de Pacientes por Data de Nascimento");
-            System.out.println("5 - Sair");
+            System.out.println("5 - Lista de Técnicos por Ordem Alfabética");
+            System.out.println("6 - Sair");
             int opcao = scanner.nextInt();
             scanner.nextLine();
 
@@ -62,6 +72,9 @@ public class Main {
                 Listas.ordenarPacientes(pacientes);
                 Listas.mostrarPacientes(pacientes);
             } else if (opcao == 5) {
+                Listas.ordenarTecnicos(tecnicos);
+                Listas.mostrarTecnicos(tecnicos);
+            } else if (opcao == 6) {
                 System.out.println("A sair...");
                 continuarMenu = false;
             } else {
