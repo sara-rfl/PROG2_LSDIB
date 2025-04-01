@@ -2,7 +2,7 @@ import java.util.List;
 
 public class Estatistica implements EstatisticaVital {
 
-    private List<Double> valores;
+    private static List<Double> valores;
 
     public Estatistica(List<Double> valores) {
         this.valores = valores;

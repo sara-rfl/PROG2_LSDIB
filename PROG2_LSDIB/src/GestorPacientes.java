@@ -1,8 +1,10 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class GestorPacientes {
+
     // cria um novo int com IDs dos pacientes, começando no 1000 ("Paciente Zero" = ID:1000)
     private static int currentId = 1000;
 
@@ -112,9 +114,11 @@ public class GestorPacientes {
 
 
     public static void calcularMedidas(String sinalVital, List<Double> valores) {
-        System.out.println("Média da " + sinalVital + ": " + String.format("%.2f", Estatistica.calcularMedia(valores)));
-        System.out.println("Desvio Padrão da " + sinalVital + ": " + String.format("%.2f", Estatistica.calcularDesvioPadrao(valores)));
-        System.out.println("Mínimo da " + sinalVital + ": " + String.format("%.2f", Estatistica.calcularMinimo(valores)));
-        System.out.println("Máximo da " + sinalVital + ": " + String.format("%.2f", Estatistica.calcularMaximo(valores)));
+        Estatistica estatistica = new Estatistica(valores);
+        System.out.println("Média da " + sinalVital + ": " + String.format("%.2f", estatistica.calcularMedia()));
+        System.out.println("Desvio Padrão da " + sinalVital + ": " + String.format("%.2f", estatistica.calcularDesvioPadrao()));
+        System.out.println("Mínimo da " + sinalVital + ": " + String.format("%.2f", estatistica.calcularMin()));
+        System.out.println("Máximo da " + sinalVital + ": " + String.format("%.2f", estatistica.calcularMax()));
     }
+
 }
