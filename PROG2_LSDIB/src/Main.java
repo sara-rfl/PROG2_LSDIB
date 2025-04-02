@@ -40,10 +40,10 @@ public class Main {
         pacientes.add(p2);
     }
     public static void criarTecnicoTeste(){
-        TecnicoSaude t1 = new TecnicoSaude("Pietro Alvez", "22/12/1994", "Enfermeiro", GestorPacientes.gerarNovoId());
+        TecnicoSaude t1 = new TecnicoSaude("Pietro Alvez", "22/12/1994", "Enfermeiro", GestorTecnicos.gerarNovoId());
         tecnicos.add(t1);
 
-        TecnicoSaude t2 = new TecnicoSaude("Anita Vieira", "12/04/1990", "Médica", GestorPacientes.gerarNovoId());
+        TecnicoSaude t2 = new TecnicoSaude("Anita Vieira", "12/04/1990", "Médica", GestorTecnicos.gerarNovoId());
         tecnicos.add(t2);
     }
 
