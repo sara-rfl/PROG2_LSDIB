@@ -1,4 +1,3 @@
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,8 +12,6 @@ public class GestorPacientes {
 
     public static Paciente selecionarPaciente(Scanner scanner, List<Paciente> pacientes) {
         System.out.println("|| Lista de Pacientes ||");
-
-
 
         for (Paciente p : pacientes) {
             System.out.println("ID: " + p.getId());
@@ -84,11 +81,10 @@ public class GestorPacientes {
     public static void processarMedidasPaciente(Scanner scanner) {
         Paciente paciente = GestorPacientes.selecionarPaciente(scanner, Main.pacientes);
         if (paciente != null) {
-            LocalDate[] periodo = PeriodoAnalise.selecionarPeriodoDeAnalisePaciente(scanner, paciente);
-            if (periodo != null) {
+            if (PeriodoAnalise.selecionarPeriodoDeAnalisePaciente(scanner, paciente)) {
                 List<Paciente> listaPaciente = new ArrayList<>();
                 listaPaciente.add(paciente);
-                Menu.sinaisVitais(scanner, listaPaciente, periodo[0], periodo[1]);
+                Menu.sinaisVitais(scanner, listaPaciente);
             }
         }
     }
@@ -96,20 +92,16 @@ public class GestorPacientes {
     public static void processarMedidasGrupo(Scanner scanner) {
         List<Paciente> grupo = GestorPacientes.selecionarGrupoPacientes(scanner, Main.pacientes);
         if (!grupo.isEmpty()) {
-            LocalDate[] periodo = PeriodoAnalise.selecionarPeriodoDeAnaliseGrupo(scanner, grupo);
-            if (periodo != null) {
-                Menu.sinaisVitais(scanner, grupo, periodo[0], periodo[1]);
+            if (PeriodoAnalise.selecionarPeriodoDeAnaliseGrupo(scanner, grupo)) {
+                Menu.sinaisVitais(scanner, grupo);
             }
-
         }
     }
 
     public static void processarMedidasTodos(Scanner scanner) {
-        LocalDate[] periodo = PeriodoAnalise.selecionarPeriodoDeAnaliseGrupo(scanner, Main.pacientes);
-        if (periodo != null) {
-            Menu.sinaisVitais(scanner, Main.pacientes, periodo[0], periodo[1]);
+        if (PeriodoAnalise.selecionarPeriodoDeAnaliseGrupo(scanner, Main.pacientes)) {
+            Menu.sinaisVitais(scanner, Main.pacientes);
         }
     }
-
 
 }

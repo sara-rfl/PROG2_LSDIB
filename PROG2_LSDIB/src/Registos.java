@@ -10,8 +10,28 @@ public class Registos {
             String opcao = scanner.next().toLowerCase();
             if (opcao.equals("s")) {
                 Paciente paciente = criarPaciente(scanner);
-                Main.pacientes.add(paciente);
+                DadosTeste.pacientes.add(paciente);
                 inserirSinaisVinais(scanner, paciente);
+                System.out.println("Introduza o ID do responsável pelas medições: ");
+                System.out.println("- Técnicos disponíveis: ");
+                for (TecnicoSaude t : DadosTeste.tecnicos) {
+                    System.out.println("ID: " + t.getId() + " | Nome: " + t.getNome());
+                }
+                int idTecnico = scanner.nextInt();
+                scanner.nextLine();
+
+                TecnicoSaude tecnicoSelecionado = null;
+                for(TecnicoSaude t : DadosTeste.tecnicos) {
+                    if(t.getId() == idTecnico) {
+                        tecnicoSelecionado = t;
+                        break;
+                    }
+                }
+                if (tecnicoSelecionado != null) {
+                    DadosTeste.pacientes.add(paciente);
+                    System.out.println("Paciente " + paciente.getId() + " registado com sucesso pelo técnico de saúde " + tecnicoSelecionado.getNome() + "!");
+                }
+
             } else {
                 continuar = false;
             }
@@ -31,7 +51,6 @@ public class Registos {
         System.out.print("Peso (kg): ");
         double peso = scanner.nextDouble();
 
-        System.out.println("Paciente ID: " + id + " registado com sucesso!"); // Aparecer o paciente registado por ID  e não pelo nome
 
         return new Paciente(nome, dataNascimento, altura, peso, id);
     }

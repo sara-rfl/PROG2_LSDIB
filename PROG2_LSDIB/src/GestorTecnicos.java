@@ -10,29 +10,29 @@ public class GestorTecnicos {
         return currentId++;
     }
 
-    public static TecnicoSaude selecionarTecnico(Scanner scanner, List<TecnicoSaude> tecnicos) {
-        System.out.println("Selecione um técnico:");
-        GestorTecnicos.mostrarLista(tecnicos);
-        System.out.print("Introduza o ID do técnico: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
+    //public static TecnicoSaude selecionarTecnico(Scanner scanner, List<TecnicoSaude> tecnicos) {
+    //System.out.println("Selecione um técnico:");
+    // GestorTecnicos.mostrarLista(tecnicos);
+    // System.out.print("Introduza o ID do técnico: ");
+    //int id = scanner.nextInt();
+    //scanner.nextLine();
 
-        for (TecnicoSaude tecnico : tecnicos) {
-            if (tecnico.getId() == id) {
-                System.out.println(tecnico);
-                return tecnico;
-            }
-        }
-        System.out.println("Técnico não encontrado.");
-        return null;
-    }
+    //for (TecnicoSaude tecnico : tecnicos) {
+    //    if (tecnico.getId() == id) {
+    //          System.out.println(tecnico);
+    //          return tecnico;
+    //     }
+    //  }
+    //  System.out.println("Técnico não encontrado.");
+    //  return null;
+    //}
 
-    public static void mostrarLista(List<TecnicoSaude> tecnicos) {
-        System.out.println("\nLista de Técnicos de Saúde:");
-        for (TecnicoSaude tecnico : tecnicos) {
-            System.out.println("ID " + tecnico.getId() + ": " + tecnico.getNome() + " - " + tecnico.getCategoriaProfissional());
-        }
-    }
+    //public static void mostrarLista(List<TecnicoSaude> tecnicos) {
+    //  System.out.println("\nLista de Técnicos de Saúde:");
+    //   for (TecnicoSaude tecnico : tecnicos) {
+    //       System.out.println("ID " + tecnico.getId() + ": " + tecnico.getNome() + " - " + tecnico.getCategoriaProfissional());
+    //    }
+    //}
 
 
 }

@@ -42,7 +42,7 @@ public class ClassificadorPaciente {
     }
 
     public static void processarResultado(Scanner scanner){
-        Paciente paciente = GestorPacientes.selecionarPaciente(scanner, Main.pacientes);
+        Paciente paciente = GestorPacientes.selecionarPaciente(scanner, DadosTeste.pacientes);
 
         if (paciente != null) {
             LocalDate[] periodo = PeriodoAnalise.selecionarPeriodoDeAnalisePaciente(scanner, paciente);
