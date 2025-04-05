@@ -1,4 +1,6 @@
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -26,17 +28,51 @@ public class ClassificadorPaciente {
 
     }
 
+    public static String classificarPaciente(Paciente paciente, LocalDate dataInicio, LocalDate dataFim) {
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        StringBuilder resultado = new StringBuilder();
+        resultado.append("\nResultado da Classificação:\n");
+
+        // Frequência Cardíaca
+        ClassificacaoComData fcInicio = AvaliadorSinalVital.classificarValorEmData(
+                paciente.getDatasFrequencia(), paciente.getFrequenciasCardiacas(), dataInicio, "FC");
+
+        ClassificacaoComData fcFim = AvaliadorSinalVital.classificarValorEmData(
+                paciente.getDatasFrequencia(), paciente.getFrequenciasCardiacas(), dataFim, "FC");
+
+        resultado.append(formatarLinha("Frequência Cardíaca", fcInicio, fcFim, formato));
+
+        // Temperatura
+        ClassificacaoComData tempInicio = AvaliadorSinalVital.classificarValorEmData(
+                paciente.getDatasTemperatura(), paciente.getTemperaturas(), dataInicio, "TEMP");
+
+        ClassificacaoComData tempFim = AvaliadorSinalVital.classificarValorEmData(
+                paciente.getDatasTemperatura(), paciente.getTemperaturas(), dataFim, "TEMP");
+
+        resultado.append(formatarLinha("Temperatura", tempInicio, tempFim, formato));
+
+        // Saturação de Oxigénio
+        ClassificacaoComData satInicio = AvaliadorSinalVital.classificarValorEmData(
+                paciente.getDatasSaturacao(), paciente.getSaturacoesOxigenio(), dataInicio, "SAT");
+
+        ClassificacaoComData satFim = AvaliadorSinalVital.classificarValorEmData(
+                paciente.getDatasSaturacao(), paciente.getSaturacoesOxigenio(), dataFim, "SAT");
+
+        resultado.append(formatarLinha("Saturação de Oxigénio", satInicio, satFim, formato));
+
+        return resultado.toString();
+    }
+
+
     public static String classificarPaciente(Paciente paciente) {
-
-
         double ultimaFrequencia = obterUltimoValor(paciente.getFrequenciasCardiacas());
         double ultimaTemperatura = obterUltimoValor(paciente.getTemperaturas());
         double ultimaSaturacao = obterUltimoValor(paciente.getSaturacoesOxigenio());
 
         StringBuilder classificacao = new StringBuilder();
-        classificacao.append(classificarFrequenciaCardiaca(ultimaFrequencia));
-        classificacao.append(classificarTemperatura(ultimaTemperatura));
-        classificacao.append(classificarSaturacao(ultimaSaturacao));
+        classificacao.append(ClassificadorSinaisVitais.classificarFrequenciaCardiaca(ultimaFrequencia));
+        classificacao.append(ClassificadorSinaisVitais.classificarTemperatura(ultimaTemperatura));
+        classificacao.append(ClassificadorSinaisVitais.classificarSaturacao(ultimaSaturacao));
 
         return classificacao.toString();
     }
@@ -53,40 +89,13 @@ public class ClassificadorPaciente {
             }
 
 
-            String resultado = classificarPaciente(paciente);
+            String resultado = classificarPaciente(paciente, periodo[0], periodo[1]);
             apresentarResultado(resultado);
         }
     }
 
-    private static String classificarFrequenciaCardiaca(double valor) {
-        if (valor < FC_NORMAL_MIN || valor > FC_ATENCAO_MAX) {
-            return "Crítico - Frequência Cardíaca\n";
-        } else if (valor > FC_NORMAL_MAX) {
-            return "Atenção - Frequência Cardíaca\n";
-        } else {
-            return "Normal - Frequência Cardíaca\n";
-        }
-    }
 
-    private static String classificarTemperatura(double valor) {
-        if (valor < TEMP_NORMAL_MIN || valor > TEMP_ATENCAO_MAX) {
-            return "Crítico - Temperatura\n";
-        } else if (valor > TEMP_NORMAL_MAX) {
-            return "Atenção - Temperatura\n";
-        } else {
-            return "Normal - Temperatura\n";
-        }
-    }
 
-    private static String classificarSaturacao(double valor) {
-        if (valor < SAT_ATENCAO_MIN) {
-            return "Crítico - Saturação de Oxigénio\n";
-        } else if (valor < SAT_NORMAL_MIN) {
-            return "Atenção - Saturação de Oxigénio\n";
-        } else {
-            return "Normal - Saturação de Oxigénio\n";
-        }
-    }
 
     private static double obterUltimoValor(List<Double> valores) {
         return valores.get(valores.size() - 1);
@@ -96,6 +105,17 @@ public class ClassificadorPaciente {
         System.out.println("\nResultado da Classificação:");
         System.out.println(resultado);
     }
+
+
+
+    public static String formatarLinha(String nome, ClassificacaoComData inicio, ClassificacaoComData fim, DateTimeFormatter formato) {
+        return String.format("%s (%s) --> %s (%s) - %s\n",
+                inicio.getClassificacao(), inicio.getData().format(formato),
+                fim.getClassificacao(), fim.getData().format(formato),
+                nome);
+    }
+
+
 
 }
 
