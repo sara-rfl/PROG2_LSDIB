@@ -74,7 +74,7 @@ public class Main {
                 Listas.ordenarTecnicos(tecnicos);
                 Listas.mostrarTecnicos(tecnicos);
 
-            } else if (opcao == 7) {
+            } else if (opcao == 6) {
                 System.out.println("A sair...");
                 continuarMenu = false;
             } else {
