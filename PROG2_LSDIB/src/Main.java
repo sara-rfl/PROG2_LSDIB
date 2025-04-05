@@ -56,9 +56,8 @@ public class Main {
             System.out.println("2 - Cálculo de Medidas de Sumário");
             System.out.println("3 - Classificação de Sinais Vitais");
             System.out.println("4 - Lista de Pacientes por Data de Nascimento");
-            System.out.println("5 - Lista de Técnicos por Ordem Alfabética");
-            System.out.println("6 - Seleção de Técnicos de Saúde");
-            System.out.println("7 - Sair");
+            System.out.println("5 - Lista de Técnicos");
+            System.out.println("6 - Sair");
             int opcao = scanner.nextInt();
             scanner.nextLine();
 
@@ -74,12 +73,7 @@ public class Main {
             } else if (opcao == 5) {
                 Listas.ordenarTecnicos(tecnicos);
                 Listas.mostrarTecnicos(tecnicos);
-            } else if (opcao == 6) {
-                GestorTecnicos.selecionarTecnico(scanner, tecnicos);
-                if (tecnicos == null) {
 
-                    System.out.println("Técnico de saúde não encontrado");
-                }
             } else if (opcao == 7) {
                 System.out.println("A sair...");
                 continuarMenu = false;

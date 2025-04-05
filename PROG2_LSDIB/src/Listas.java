@@ -39,7 +39,10 @@ public class Listas {
     //metodo que faz a exibica, ja organizada por ordem alfabetica
     public static void mostrarTecnicos(List<TecnicoSaude> tecnicos) {
         for (TecnicoSaude tecnico : tecnicos) {
-            System.out.println(tecnico.getNome());
+            System.out.println("Nome: " + tecnico.getNome());
+            System.out.println("Data de nascimento: " + tecnico.getDataNascimento());
+            System.out.println("Categoria profissional: " + tecnico.getCategoriaProfissional());
+            System.out.println();
         }
     }
 }
