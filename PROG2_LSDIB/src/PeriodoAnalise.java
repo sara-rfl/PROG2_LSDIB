@@ -32,9 +32,12 @@ public class PeriodoAnalise {
         }
     }
 
-    public static boolean selecionarPeriodoDeAnalisePaciente(Scanner scanner, Paciente paciente) {
+    public static LocalDate[] selecionarPeriodoDeAnalisePaciente(Scanner scanner, Paciente paciente) {
+        // mostra os intervalos para cada paciente
+        System.out.println("\n|| Datas de Registo para o Paciente " + paciente.getId() + " ||");
+        String intervalo = obterIntervaloDeRegistos(paciente);
+        System.out.println("Intervalo de registos: " + intervalo + "\n");
 
-        mostrarIntervaloDeRegistos(paciente);
 
         while (true) {
             LocalDate[] periodo = obterPeriodoDeAnalise(scanner);
@@ -42,14 +45,20 @@ public class PeriodoAnalise {
             LocalDate dataFim = periodo[1];
 
             if (temRegistosNoIntervalo(paciente, dataInicio, dataFim)) {
-                return true;
+                return periodo;
             } else {
                 System.out.println("\nNão existem dados para este período. Introduza novo período de análise.");
             }
         }
     }
 
-    public static boolean selecionarPeriodoDeAnaliseGrupo(Scanner scanner, List<Paciente> pacientesSelecionados) {
+    public static LocalDate[] selecionarPeriodoDeAnaliseGrupo(Scanner scanner, List<Paciente> pacientesSelecionados) {
+        // Mostra intervalos de registos de cada paciente
+        System.out.println("\n|| Intervalos de Registo dos Pacientes Selecionados ||");
+        for (Paciente p : pacientesSelecionados) {
+            String intervalo = obterIntervaloDeRegistos(p);
+            System.out.println("ID " + p.getId() + ": " + intervalo);
+        }
         while (true) {
             LocalDate[] periodo = obterPeriodoDeAnalise(scanner);
             LocalDate dataInicio = periodo[0];
@@ -58,12 +67,14 @@ public class PeriodoAnalise {
             for (Paciente paciente : pacientesSelecionados) {
                 if (temRegistosNoIntervalo(paciente, dataInicio, dataFim)) {
                     System.out.println("Calculando medidas de " + dataInicio + " a " + dataFim);
-                    return true;
+                    return periodo;
                 }
             }
+
             System.out.println("Nenhum dos pacientes tem dados nesse período. Escolha outro.");
         }
     }
+
 
     public static boolean temRegistosNoIntervalo(Paciente paciente, LocalDate dataInicio, LocalDate dataFim) {
         return verificaRegistosNoIntervalo(paciente.getDatasFrequencia(), dataInicio, dataFim) ||
@@ -81,26 +92,25 @@ public class PeriodoAnalise {
         return false;
     }
 
-    public static void mostrarIntervaloDeRegistos(Paciente paciente) {
-        List<LocalDateTime> datas = new ArrayList<>();
-        datas.addAll(paciente.getDatasFrequencia());
-        datas.addAll(paciente.getDatasTemperatura());
-        datas.addAll(paciente.getDatasSaturacao());
 
-        System.out.println("|| Datas de Registo para o Paciente " + paciente.getId() + " ||");
 
-        if (datas.isEmpty()) {
-            System.out.println("Este paciente não tem quaisquer registos disponíveis.");
-            return;
+    public static String obterIntervaloDeRegistos(Paciente paciente) {
+        List<LocalDateTime> todasAsDatas = new ArrayList<>();
+        todasAsDatas.addAll(paciente.getDatasFrequencia());
+        todasAsDatas.addAll(paciente.getDatasTemperatura());
+        todasAsDatas.addAll(paciente.getDatasSaturacao());
+
+        if (todasAsDatas.isEmpty()) {
+            return "Sem registos";
         }
 
-        LocalDateTime min = Collections.min(datas);
-        LocalDateTime max = Collections.max(datas);
+        LocalDateTime min = Collections.min(todasAsDatas);
+        LocalDateTime max = Collections.max(todasAsDatas);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        System.out.println("Intervalo de registos: " +
-                min.toLocalDate().format(formatter) + " a " + max.toLocalDate().format(formatter));
+        return min.toLocalDate().format(formatter) + " a " + max.toLocalDate().format(formatter);
     }
+
 
 
 }

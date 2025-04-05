@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -44,11 +45,13 @@ public class ClassificadorPaciente {
         Paciente paciente = GestorPacientes.selecionarPaciente(scanner, Main.pacientes);
 
         if (paciente != null) {
-            if (PeriodoAnalise.selecionarPeriodoDeAnalisePaciente(scanner, paciente)) {
+            LocalDate[] periodo = PeriodoAnalise.selecionarPeriodoDeAnalisePaciente(scanner, paciente);
+            if (periodo != null) {
                 List<Paciente> listaPaciente = new ArrayList<>();
                 listaPaciente.add(paciente);
                 System.out.println("\nPaciente selecionado com sucesso!");
             }
+
 
             String resultado = classificarPaciente(paciente);
             apresentarResultado(resultado);

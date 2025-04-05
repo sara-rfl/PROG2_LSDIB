@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -31,7 +32,7 @@ public class Menu {
         }
     }
 
-    public static void sinaisVitais(Scanner scanner, List<Paciente> pacientes) {
+    public static void sinaisVitais(Scanner scanner, List<Paciente> pacientes, LocalDate dataInicio, LocalDate dataFim) {
         int opcao;
         do {
             System.out.println("\n--- Menu Sinais Vitais ---");
@@ -45,7 +46,7 @@ public class Menu {
             scanner.nextLine();
 
             if (opcao >= 1 && opcao <= 4) {
-                processarOpcao(opcao, pacientes);
+                processarOpcao(opcao, pacientes, dataInicio, dataFim);
             } else if (opcao == 5) {
                 System.out.println("A voltar ao menu principal...");
             } else {
@@ -54,28 +55,57 @@ public class Menu {
         } while (opcao != 5);
     }
 
-    public static void processarOpcao(int opcao, List<Paciente> pacientes) {
-        // Listas para armazenar os sinais vitais de todos os pacientes
-        List<Double> frequenciasCardiacas = new ArrayList<>();
-        List<Double> saturacoesOxigenio = new ArrayList<>();
-        List<Double> temperaturas = new ArrayList<>();
+    public static void processarOpcao(int opcao, List<Paciente> pacientes, LocalDate inicio, LocalDate fim) {
+        List<Double> valores = new ArrayList<>();
 
-        // Percorre a lista de pacientes e adiciona os sinais vitais às listas
-        for (Paciente paciente : pacientes) {
-            // Se a opção for 1 ou 4, adiciona os dados de frequência cardíaca
-            if (opcao == 1 || opcao == 4) frequenciasCardiacas.addAll(paciente.getFrequenciasCardiacas());
-            // Se a opção for 2 ou 4, adiciona os dados de saturação
-            if (opcao == 2 || opcao == 4) saturacoesOxigenio.addAll(paciente.getSaturacoesOxigenio());
-            // Se a opção for 3 ou 4, adiciona os dados de temperatura
-            if (opcao == 3 || opcao == 4) temperaturas.addAll(paciente.getTemperaturas());
+        if (opcao == 1) {
+            for (Paciente p : pacientes)
+                valores.addAll(FiltroSinaisVitais.obterValoresFiltrados(p, "Frequência Cardíaca", inicio, fim));
+            GestorPacientes.imprimirMedidasSelecionadas("Frequência Cardíaca", valores);
         }
-        // Chama o metodo para imprimir as medidas selecionadas, dependendo da opção escolhida
-        if (opcao == 1 || opcao == 4)
-            GestorPacientes.imprimirMedidasSelecionadas("Frequência Cardíaca", frequenciasCardiacas);
-        if (opcao == 2 || opcao == 4)
-            GestorPacientes.imprimirMedidasSelecionadas("Saturação de Oxigênio", saturacoesOxigenio);
-        if (opcao == 3 || opcao == 4) GestorPacientes.imprimirMedidasSelecionadas("Temperatura", temperaturas);
+
+        if (opcao == 2) {
+            for (Paciente p : pacientes)
+                valores.addAll(FiltroSinaisVitais.obterValoresFiltrados(p, "Saturação de Oxigênio", inicio, fim));
+            GestorPacientes.imprimirMedidasSelecionadas("Saturação de Oxigênio", valores);
+        }
+
+        if (opcao == 3) {
+            for (Paciente p : pacientes)
+                valores.addAll(FiltroSinaisVitais.obterValoresFiltrados(p, "Temperatura", inicio, fim));
+            GestorPacientes.imprimirMedidasSelecionadas("Temperatura", valores);
+        }
+
+        if (opcao == 4) {
+            processarOpcao(1, pacientes, inicio, fim);
+            processarOpcao(2, pacientes, inicio, fim);
+            processarOpcao(3, pacientes, inicio, fim);
+        }
     }
+
+
+//    public static void processarOpcao(int opcao, List<Paciente> pacientes, LocalDate dataInicio, LocalDate dataFim) {
+//        // Listas para armazenar os sinais vitais de todos os pacientes
+//        List<Double> frequenciasCardiacas = new ArrayList<>();
+//        List<Double> saturacoesOxigenio = new ArrayList<>();
+//        List<Double> temperaturas = new ArrayList<>();
+//
+//        // Percorre a lista de pacientes e adiciona os sinais vitais às listas
+//        for (Paciente paciente : pacientes) {
+//            // Se a opção for 1 ou 4, adiciona os dados de frequência cardíaca
+//            if (opcao == 1 || opcao == 4) frequenciasCardiacas.addAll(paciente.getFrequenciasCardiacas());
+//            // Se a opção for 2 ou 4, adiciona os dados de saturação
+//            if (opcao == 2 || opcao == 4) saturacoesOxigenio.addAll(paciente.getSaturacoesOxigenio());
+//            // Se a opção for 3 ou 4, adiciona os dados de temperatura
+//            if (opcao == 3 || opcao == 4) temperaturas.addAll(paciente.getTemperaturas());
+//        }
+//        // Chama o metodo para imprimir as medidas selecionadas, dependendo da opção escolhida
+//        if (opcao == 1 || opcao == 4)
+//            GestorPacientes.imprimirMedidasSelecionadas("Frequência Cardíaca", frequenciasCardiacas);
+//        if (opcao == 2 || opcao == 4)
+//            GestorPacientes.imprimirMedidasSelecionadas("Saturação de Oxigênio", saturacoesOxigenio);
+//        if (opcao == 3 || opcao == 4) GestorPacientes.imprimirMedidasSelecionadas("Temperatura", temperaturas);
+//    }
 
 
     public static void menuClassificacaoPacientes(Scanner scanner, List<Paciente> pacientes) {
