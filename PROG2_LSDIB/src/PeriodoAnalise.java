@@ -9,28 +9,39 @@ import java.util.Scanner;
 
 public class PeriodoAnalise {
     public static LocalDate[] obterPeriodoDeAnalise(Scanner scanner) {
-        while (true) {
-            try {
-                System.out.print("Introduza a data de início (dd/mm/aaaa): ");
-                String dataInicioStr = scanner.nextLine();
-                LocalDate dataInicio = LocalDate.parse(dataInicioStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate dataInicio = null;
+        LocalDate dataFim = null;
+        boolean datasValidas = false;
 
-                System.out.print("Introduza a data de fim (dd/mm/aaaa): ");
-                String dataFimStr = scanner.nextLine();
-                LocalDate dataFim = LocalDate.parse(dataFimStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        while (!datasValidas) {
+            System.out.print("Introduza a data de início (dd/mm/aaaa): ");
+            String dataInicioStr = scanner.nextLine();
 
-                if (dataFim.isBefore(dataInicio)) {
-                    System.out.println("Erro: A data de fim não pode ser anterior à data de início.");
-                    continue;
+            System.out.print("Introduza a data de fim (dd/mm/aaaa): ");
+            String dataFimStr = scanner.nextLine();
+
+            if (dataInicioStr.length() == 10 && dataFimStr.length() == 10) {
+                dataInicio = parseDataBasica(dataInicioStr, formatter);
+                dataFim = parseDataBasica(dataFimStr, formatter);
+
+                if (dataInicio != null && dataFim != null) {
+                    if (!dataFim.isBefore(dataInicio)) {
+                        datasValidas = true;
+                    } else {
+                        System.out.println("A data de fim não pode ser anterior à data de início.");
+                    }
+                } else {
+                    System.out.println("Formato inválido. Introduza datas no formato dd/mm/aaaa.");
                 }
-
-                return new LocalDate[]{dataInicio, dataFim};
-
-            } catch (DateTimeParseException e) {
-                System.out.println("Formato de data inválido. Introduza no formato dd/mm/aaaa.");
+            } else {
+                System.out.println("Formato inválido. Introduza datas no formato dd/mm/aaaa.");
             }
         }
+
+        return new LocalDate[]{dataInicio, dataFim};
     }
+
 
     public static LocalDate[] selecionarPeriodoDeAnalisePaciente(Scanner scanner, Paciente paciente) {
         // mostra os intervalos para cada paciente
@@ -109,6 +120,14 @@ public class PeriodoAnalise {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         return min.toLocalDate().format(formatter) + " a " + max.toLocalDate().format(formatter);
+    }
+
+    private static LocalDate parseDataBasica(String input, DateTimeFormatter formatter) {
+        try {
+            return LocalDate.parse(input, formatter);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 
