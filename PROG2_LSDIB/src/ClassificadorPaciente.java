@@ -28,53 +28,71 @@ public class ClassificadorPaciente {
     public static String classificarPaciente(Paciente paciente) {
 
 
-
-        // Se todos os dados estiverem presentes, proceder com a classificação
-        double ultimaFrequencia = paciente.getFrequenciasCardiacas().get(paciente.getFrequenciasCardiacas().size() - 1);
-        double ultimaTemperatura = paciente.getTemperaturas().get(paciente.getTemperaturas().size() - 1);
-        double ultimaSaturacao = paciente.getSaturacoesOxigenio().get(paciente.getSaturacoesOxigenio().size() - 1);
+        double ultimaFrequencia = obterUltimoValor(paciente.getFrequenciasCardiacas());
+        double ultimaTemperatura = obterUltimoValor(paciente.getTemperaturas());
+        double ultimaSaturacao = obterUltimoValor(paciente.getSaturacoesOxigenio());
 
         StringBuilder classificacao = new StringBuilder();
-
-        if (ultimaFrequencia < FC_NORMAL_MIN || ultimaFrequencia > FC_ATENCAO_MAX) {
-            classificacao.append("Crítico - Frequência Cardíaca\n");
-        } else if (ultimaFrequencia > FC_NORMAL_MAX) {
-            classificacao.append("Atenção - Frequência Cardíaca\n");
-        } else {
-            classificacao.append("Normal - Frequência Cardíaca\n");
-        }
-
-        if (ultimaTemperatura < TEMP_NORMAL_MIN || ultimaTemperatura > TEMP_ATENCAO_MAX) {
-            classificacao.append("Crítico - Temperatura\n");
-        } else if (ultimaTemperatura > TEMP_NORMAL_MAX) {
-            classificacao.append("Atenção - Temperatura\n");
-        } else {
-            classificacao.append("Normal - Temperatura\n");
-        }
-
-        if (ultimaSaturacao < SAT_ATENCAO_MIN) {
-            classificacao.append("Crítico - Saturação de Oxigénio\n");
-        } else if (ultimaSaturacao < SAT_NORMAL_MIN) {
-            classificacao.append("Atenção - Saturação de Oxigénio\n");
-        } else {
-            classificacao.append("Normal - Saturação de Oxigénio\n");
-        }
+        classificacao.append(classificarFrequenciaCardiaca(ultimaFrequencia));
+        classificacao.append(classificarTemperatura(ultimaTemperatura));
+        classificacao.append(classificarSaturacao(ultimaSaturacao));
 
         return classificacao.toString();
     }
 
     public static void processarResultado(Scanner scanner){
-    Paciente paciente = GestorPacientes.selecionarPaciente(scanner, Main.pacientes);
+        Paciente paciente = GestorPacientes.selecionarPaciente(scanner, Main.pacientes);
+
         if (paciente != null) {
-        if (PeriodoAnalise.selecionarPeriodoDeAnalisePaciente(scanner, paciente)) {
-            List<Paciente> listaPaciente = new ArrayList<>();
-            listaPaciente.add(paciente);
-            System.out.println("\nPaciente selecionado com sucesso!");
-        }
+            if (PeriodoAnalise.selecionarPeriodoDeAnalisePaciente(scanner, paciente)) {
+                List<Paciente> listaPaciente = new ArrayList<>();
+                listaPaciente.add(paciente);
+                System.out.println("\nPaciente selecionado com sucesso!");
+            }
+
             String resultado = classificarPaciente(paciente);
-            System.out.println("\nResultado da Classificação:");
-            System.out.println(resultado);
+            apresentarResultado(resultado);
         }
     }
+
+    private static String classificarFrequenciaCardiaca(double valor) {
+        if (valor < FC_NORMAL_MIN || valor > FC_ATENCAO_MAX) {
+            return "Crítico - Frequência Cardíaca\n";
+        } else if (valor > FC_NORMAL_MAX) {
+            return "Atenção - Frequência Cardíaca\n";
+        } else {
+            return "Normal - Frequência Cardíaca\n";
+        }
+    }
+
+    private static String classificarTemperatura(double valor) {
+        if (valor < TEMP_NORMAL_MIN || valor > TEMP_ATENCAO_MAX) {
+            return "Crítico - Temperatura\n";
+        } else if (valor > TEMP_NORMAL_MAX) {
+            return "Atenção - Temperatura\n";
+        } else {
+            return "Normal - Temperatura\n";
+        }
+    }
+
+    private static String classificarSaturacao(double valor) {
+        if (valor < SAT_ATENCAO_MIN) {
+            return "Crítico - Saturação de Oxigénio\n";
+        } else if (valor < SAT_NORMAL_MIN) {
+            return "Atenção - Saturação de Oxigénio\n";
+        } else {
+            return "Normal - Saturação de Oxigénio\n";
+        }
+    }
+
+    private static double obterUltimoValor(List<Double> valores) {
+        return valores.get(valores.size() - 1);
+    }
+
+    private static void apresentarResultado(String resultado) {
+        System.out.println("\nResultado da Classificação:");
+        System.out.println(resultado);
+    }
+
 }
 
