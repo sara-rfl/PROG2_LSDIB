@@ -76,4 +76,26 @@ public class Menu {
             GestorPacientes.imprimirMedidasSelecionadas("Saturação de Oxigênio", saturacoesOxigenio);
         if (opcao == 3 || opcao == 4) GestorPacientes.imprimirMedidasSelecionadas("Temperatura", temperaturas);
     }
+
+
+    public static void menuClassificacaoPacientes(Scanner scanner, List<Paciente> pacientes) {
+        boolean continuarClassificacao = true;
+
+        while (continuarClassificacao) {
+            System.out.println("\n || CLASSIFICAÇÃO DE PACIENTES || ");
+            System.out.println("1 - Selecionar e Classificar Paciente");
+            System.out.println("2 - Voltar ao Menu Principal");
+            System.out.print("Escolha uma opção: ");
+            int escolha = scanner.nextInt();
+            scanner.nextLine();
+
+            if (escolha == 1) {
+                ClassificadorPaciente.processarResultado(scanner);
+            } else if (escolha == 2) {
+                continuarClassificacao = false;
+            } else {
+                System.out.println("Opção inválida. Tente novamente.");
+            }
+        }
+    }
 }

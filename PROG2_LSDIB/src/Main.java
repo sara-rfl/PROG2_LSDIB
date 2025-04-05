@@ -67,8 +67,7 @@ public class Main {
             } else if (opcao == 2) {
                 Menu.medidasSumario(scanner);
             } else if (opcao == 3) {
-                System.out.println("\n || CLASSIFICAÇÃO DE PACIENTES || ");
-                ClassificadorPaciente.iniciarClassificacao(scanner, pacientes);
+                Menu.menuClassificacaoPacientes(scanner, pacientes);
             } else if (opcao == 4) {
                 Listas.ordenarPacientes(pacientes);
                 Listas.mostrarPacientes(pacientes);
