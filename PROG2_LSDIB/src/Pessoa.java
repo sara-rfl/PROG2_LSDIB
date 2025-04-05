@@ -1,8 +1,14 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Classe que representa uma pessoa com nome, data de nascimento e identificador.
+ * Implementa as interfaces {@code PessoaInterface} e {@code OrdenavelPorData}.
+ */
+
 public class Pessoa implements PessoaInterface, OrdenavelPorData {
 
+    // Formatador para interpretar datas no formato dd/MM/aaaa
     private static final DateTimeFormatter FORMATADOR = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private String nome;
@@ -36,15 +42,30 @@ public class Pessoa implements PessoaInterface, OrdenavelPorData {
         this.dataDeNascimento = LocalDate.parse(dataDeNascimento, FORMATADOR);
     }
 
-    // Criar funções para o construtor ir buscar o ID implementado associado ao paciente
+    /**
+     * Obtém o ID da pessoa.
+     *
+     * @return Identificador único
+     */
     public int getId() { return id;}
 
+    /**
+     * Define um novo ID para a pessoa.
+     *
+     * @param id Novo identificador
+     */
     public void setId(int id) { this.id = id; }
 
     public String toString() {
         return String.format("Pessoa: %s, ID: %d, Data de Nascimento: %s", nome, id, dataDeNascimento);
     }
 
+    /**
+     * Implementação do metodo da interface {@code OrdenavelPorData},
+     * que define a data de referência para ordenação.
+     *
+     * @return Data de nascimento da pessoa
+     */
     @Override
     public LocalDate getDataReferencia() {
         return dataDeNascimento;

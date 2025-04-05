@@ -7,10 +7,22 @@ public class GestorPacientes {
     // cria um novo int com IDs dos pacientes, começando no 1000 ("Paciente Zero" = ID:1000)
     private static int currentId = 1000;
 
+    /**
+     * Gera um novo identificador único para um paciente.
+     *
+     * @return ID gerado
+     */
     public static int gerarNovoId() {
         return currentId++;
     }
 
+    /**
+     * Permite ao utilizador selecionar um paciente com base no seu ID.
+     *
+     * @param scanner Scanner para input
+     * @param pacientes Lista de pacientes disponíveis
+     * @return Paciente selecionado, ou null se o ID não for encontrado
+     */
     public static Paciente selecionarPaciente(Scanner scanner, List<Paciente> pacientes) {
         System.out.println("|| Lista de Pacientes ||");
 

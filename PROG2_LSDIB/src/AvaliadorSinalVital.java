@@ -4,17 +4,21 @@ import java.util.List;
 
 /**
  * Classe responsável por classificar os sinais vitais de um paciente
- * com base em valores registados para datas específicas.
+ * com base nos valores registados para datas específicas.
  */
 public class AvaliadorSinalVital {
 
     /**
-     * Classifica um valor de sinal vital registado numa data específica.
+     * Classifica o valor de um sinal vital registado numa data específica.
+     * A classificação é feita com base no primeiro registo encontrado que ocorre
+     * no próprio dia ou após a data fornecida.
      *
-     * @param datas   Lista de datas dos registos
-     * @param valores Lista de valores dos sinais vitais
-     * @param tipo    Tipo de sinal vital ("FC", "TEMP", "SAT")
-     * @return Classificação do valor nesse dia ou mensagem de ausência
+     * @param datas   Lista de datas e horas dos registos
+     * @param valores Lista de valores correspondentes aos sinais vitais
+     * @param alvo    Data alvo para procurar o registo
+     * @param tipo    Tipo de sinal vital: "FC" (frequência cardíaca), "TEMP" (temperatura corporal) ou "SAT" (saturação de oxigénio)
+     * @return Um objeto {@code ClassificacaoComData} com a classificação do valor encontrado e a data correspondente,
+     *         ou uma mensagem de ausência de registos se nenhum valor for encontrado.
      */
     public static ClassificacaoComData classificarValorEmData(List<LocalDateTime> datas, List<Double> valores, LocalDate alvo, String tipo) {
         for (int i = 0; i < datas.size(); i++) {
@@ -33,17 +37,15 @@ public class AvaliadorSinalVital {
             }
         }
 
-        // Se nenhum valor encontrado, devolve "Nenhum valor registado"
+        // Se nenhum valor for encontrado, devolve "Nenhum valor registado"
         return new ClassificacaoComData("Nenhum valor registado", alvo);
     }
 
-
-
     /**
-     * Classifica um valor de frequência cardíaca.
+     * Classifica um valor de frequência cardíaca (FC) com base em limiares definidos.
      *
-     * @param valor Valor da FC
-     * @return Classificação ("Normal", "Atenção", "Crítico")
+     * @param valor Valor da frequência cardíaca a classificar
+     * @return Classificação como "Normal", "Atenção" ou "Crítico"
      */
     public static String classificarFrequenciaCardiaca(double valor) {
         if (valor < ClassificadorPaciente.FC_NORMAL_MIN || valor > ClassificadorPaciente.FC_ATENCAO_MAX) return "Crítico";
@@ -52,10 +54,10 @@ public class AvaliadorSinalVital {
     }
 
     /**
-     * Classifica um valor de temperatura corporal.
+     * Classifica um valor de temperatura corporal com base em limiares definidos.
      *
-     * @param valor Valor da temperatura
-     * @return Classificação ("Normal", "Atenção", "Crítico")
+     * @param valor Valor da temperatura a classificar
+     * @return Classificação como "Normal", "Atenção" ou "Crítico"
      */
     public static String classificarTemperatura(double valor) {
         if (valor < ClassificadorPaciente.TEMP_NORMAL_MIN || valor > ClassificadorPaciente.TEMP_ATENCAO_MAX) return "Crítico";
@@ -64,10 +66,10 @@ public class AvaliadorSinalVital {
     }
 
     /**
-     * Classifica um valor de saturação de oxigénio.
+     * Classifica um valor de saturação de oxigénio com base em limiares definidos.
      *
-     * @param valor Valor da saturação
-     * @return Classificação ("Normal", "Atenção", "Crítico")
+     * @param valor Valor da saturação a classificar
+     * @return Classificação como "Normal", "Atenção" ou "Crítico"
      */
     public static String classificarSaturacao(double valor) {
         if (valor < ClassificadorPaciente.SAT_ATENCAO_MIN) return "Crítico";
@@ -75,4 +77,3 @@ public class AvaliadorSinalVital {
         return "Normal";
     }
 }
-

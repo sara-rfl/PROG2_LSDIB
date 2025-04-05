@@ -85,6 +85,14 @@ public class Paciente extends Pessoa implements Comparable<Paciente>, Classifica
         return datasSaturacao;
     }
 
+
+    /**
+     * Devolve a classificação geral do paciente com base nos últimos valores de
+     * frequência cardíaca, temperatura e saturação de oxigénio.
+     *
+     * @return Uma string com a classificação ("Normal", "Atenção", "Crítico") ou
+     *         "Sem dados suficientes" se algum dos sinais vitais estiver em falta.
+     */
     @Override
     public String getClassificacao() {
         if (frequenciasCardiacas.isEmpty() || temperaturas.isEmpty() || saturacoesOxigenio.isEmpty()) {
@@ -93,6 +101,13 @@ public class Paciente extends Pessoa implements Comparable<Paciente>, Classifica
         return ClassificadorPaciente.classificarPaciente(this);
     }
 
+    /**
+     * Compara dois pacientes com base na sua data de nascimento.
+     * Pode ser usado para ordenação por idade (mais velho primeiro).
+     *
+     * @param o Outro paciente a comparar
+     * @return Valor negativo se este paciente for mais velho, positivo se for mais novo, 0 se forem iguais
+     */
     @Override
     public int compareTo(Paciente o) {
         return this.getDataDeNascimento().compareTo(o.getDataDeNascimento ());

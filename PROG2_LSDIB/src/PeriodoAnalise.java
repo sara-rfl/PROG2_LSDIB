@@ -8,6 +8,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class PeriodoAnalise {
+
+    /**
+     * Solicita ao utilizador um período de análise, validando o formato e a ordem das datas.
+     *
+     * @param scanner Scanner para leitura do input
+     * @return Um array com duas datas: [dataInicio, dataFim]
+     */
     public static LocalDate[] obterPeriodoDeAnalise(Scanner scanner) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate dataInicio = null;
@@ -42,7 +49,14 @@ public class PeriodoAnalise {
         return new LocalDate[]{dataInicio, dataFim};
     }
 
-
+    /**
+     * Permite ao utilizador selecionar um período de análise para um paciente específico.
+     * Valida se o paciente possui registos no intervalo escolhido.
+     *
+     * @param scanner Scanner para input
+     * @param paciente Paciente em análise
+     * @return Período válido com registos, no formato [dataInicio, dataFim]
+     */
     public static LocalDate[] selecionarPeriodoDeAnalisePaciente(Scanner scanner, Paciente paciente) {
         // mostra os intervalos para cada paciente
         System.out.println("\n|| Datas de Registo para o Paciente " + paciente.getId() + " ||");
@@ -63,6 +77,14 @@ public class PeriodoAnalise {
         }
     }
 
+    /**
+     * Permite ao utilizador selecionar um período de análise para um grupo de pacientes.
+     * Valida se pelo menos um paciente tem registos no intervalo.
+     *
+     * @param scanner Scanner para input
+     * @param pacientesSelecionados Lista de pacientes selecionados
+     * @return Período válido com registos, no formato [dataInicio, dataFim]
+     */
     public static LocalDate[] selecionarPeriodoDeAnaliseGrupo(Scanner scanner, List<Paciente> pacientesSelecionados) {
         // Mostra intervalos de registos de cada paciente
         System.out.println("\n|| Intervalos de Registo dos Pacientes Selecionados ||");
@@ -86,13 +108,28 @@ public class PeriodoAnalise {
         }
     }
 
-
+    /**
+     * Verifica se o paciente possui algum registo de sinais vitais no intervalo especificado.
+     *
+     * @param paciente Paciente a verificar
+     * @param dataInicio Data de início do intervalo
+     * @param dataFim Data de fim do intervalo
+     * @return true se houver registos dentro do intervalo
+     */
     public static boolean temRegistosNoIntervalo(Paciente paciente, LocalDate dataInicio, LocalDate dataFim) {
         return verificaRegistosNoIntervalo(paciente.getDatasFrequencia(), dataInicio, dataFim) ||
                 verificaRegistosNoIntervalo(paciente.getDatasTemperatura(), dataInicio, dataFim) ||
                 verificaRegistosNoIntervalo(paciente.getDatasSaturacao(), dataInicio, dataFim);
     }
 
+    /**
+     * Verifica se existe pelo menos uma data de registo dentro do intervalo fornecido.
+     *
+     * @param datas Lista de datas de registo
+     * @param dataInicio Data de início
+     * @param dataFim Data de fim
+     * @return true se existir algum registo nesse intervalo
+     */
     public static boolean verificaRegistosNoIntervalo(List<LocalDateTime> datas, LocalDate dataInicio, LocalDate dataFim) {
         for (LocalDateTime dataRegisto : datas) {
             LocalDate dataRegistoLocal = dataRegisto.toLocalDate();
@@ -104,7 +141,12 @@ public class PeriodoAnalise {
     }
 
 
-
+    /**
+     * Obtém o intervalo completo de datas com registos para um paciente.
+     *
+     * @param paciente Paciente alvo
+     * @return String com intervalo formatado ou "Sem registos" se não houver dados
+     */
     public static String obterIntervaloDeRegistos(Paciente paciente) {
         List<LocalDateTime> todasAsDatas = new ArrayList<>();
         todasAsDatas.addAll(paciente.getDatasFrequencia());
@@ -122,6 +164,13 @@ public class PeriodoAnalise {
         return min.toLocalDate().format(formatter) + " a " + max.toLocalDate().format(formatter);
     }
 
+    /**
+     * Tenta converter uma string para {@code LocalDate} usando o formatador especificado.
+     *
+     * @param input String de data
+     * @param formatter Formatador de data
+     * @return Data convertida ou null se inválida
+     */
     private static LocalDate parseDataBasica(String input, DateTimeFormatter formatter) {
         try {
             return LocalDate.parse(input, formatter);
