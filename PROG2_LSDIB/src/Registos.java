@@ -10,7 +10,7 @@ public class Registos {
             String opcao = scanner.next().toLowerCase();
             if (opcao.equals("s")) {
                 Paciente paciente = criarPaciente(scanner);
-                Main.pacientes.add(paciente);
+                DadosTeste.pacientes.add(paciente);
                 inserirSinaisVinais(scanner, paciente);
             } else {
                 continuar = false;

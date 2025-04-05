@@ -79,7 +79,7 @@ public class GestorPacientes {
     }
 
     public static void processarMedidasPaciente(Scanner scanner) {
-        Paciente paciente = GestorPacientes.selecionarPaciente(scanner, Main.pacientes);
+        Paciente paciente = GestorPacientes.selecionarPaciente(scanner, DadosTeste.pacientes);
         if (paciente != null) {
             if (PeriodoAnalise.selecionarPeriodoDeAnalisePaciente(scanner, paciente)) {
                 List<Paciente> listaPaciente = new ArrayList<>();
@@ -90,7 +90,7 @@ public class GestorPacientes {
     }
 
     public static void processarMedidasGrupo(Scanner scanner) {
-        List<Paciente> grupo = GestorPacientes.selecionarGrupoPacientes(scanner, Main.pacientes);
+        List<Paciente> grupo = GestorPacientes.selecionarGrupoPacientes(scanner, DadosTeste.pacientes);
         if (!grupo.isEmpty()) {
             if (PeriodoAnalise.selecionarPeriodoDeAnaliseGrupo(scanner, grupo)) {
                 Menu.sinaisVitais(scanner, grupo);
@@ -99,8 +99,8 @@ public class GestorPacientes {
     }
 
     public static void processarMedidasTodos(Scanner scanner) {
-        if (PeriodoAnalise.selecionarPeriodoDeAnaliseGrupo(scanner, Main.pacientes)) {
-            Menu.sinaisVitais(scanner, Main.pacientes);
+        if (PeriodoAnalise.selecionarPeriodoDeAnaliseGrupo(scanner, DadosTeste.pacientes)) {
+            Menu.sinaisVitais(scanner, DadosTeste.pacientes);
         }
     }
 
