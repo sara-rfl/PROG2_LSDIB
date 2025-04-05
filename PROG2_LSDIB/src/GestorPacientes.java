@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -79,29 +80,35 @@ public class GestorPacientes {
     }
 
     public static void processarMedidasPaciente(Scanner scanner) {
-        Paciente paciente = GestorPacientes.selecionarPaciente(scanner, Main.pacientes);
+        Paciente paciente = GestorPacientes.selecionarPaciente(scanner, DadosTeste.pacientes);
         if (paciente != null) {
-            if (PeriodoAnalise.selecionarPeriodoDeAnalisePaciente(scanner, paciente)) {
+            LocalDate[] periodo = PeriodoAnalise.selecionarPeriodoDeAnalisePaciente(scanner, paciente);
+            if (periodo != null) {
                 List<Paciente> listaPaciente = new ArrayList<>();
                 listaPaciente.add(paciente);
-                Menu.sinaisVitais(scanner, listaPaciente);
+                Menu.sinaisVitais(scanner, listaPaciente, periodo[0], periodo[1]);
             }
         }
     }
+
 
     public static void processarMedidasGrupo(Scanner scanner) {
-        List<Paciente> grupo = GestorPacientes.selecionarGrupoPacientes(scanner, Main.pacientes);
+        List<Paciente> grupo = GestorPacientes.selecionarGrupoPacientes(scanner, DadosTeste.pacientes);
         if (!grupo.isEmpty()) {
-            if (PeriodoAnalise.selecionarPeriodoDeAnaliseGrupo(scanner, grupo)) {
-                Menu.sinaisVitais(scanner, grupo);
+            LocalDate[] periodo = PeriodoAnalise.selecionarPeriodoDeAnaliseGrupo(scanner, grupo);
+            if (periodo != null) {
+                Menu.sinaisVitais(scanner, grupo, periodo[0], periodo[1]);
             }
         }
     }
 
+
     public static void processarMedidasTodos(Scanner scanner) {
-        if (PeriodoAnalise.selecionarPeriodoDeAnaliseGrupo(scanner, Main.pacientes)) {
-            Menu.sinaisVitais(scanner, Main.pacientes);
+        LocalDate[] periodo = PeriodoAnalise.selecionarPeriodoDeAnaliseGrupo(scanner, DadosTeste.pacientes);
+        if (periodo != null) {
+            Menu.sinaisVitais(scanner, DadosTeste.pacientes, periodo[0], periodo[1]);
         }
     }
+
 
 }
