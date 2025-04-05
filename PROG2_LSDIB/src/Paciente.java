@@ -97,4 +97,7 @@ public class Paciente extends Pessoa implements Comparable<Paciente>, Classifica
     public int compareTo(Paciente o) {
         return this.getDataDeNascimento().compareTo(o.getDataDeNascimento ());
     }
+
+
+
 }

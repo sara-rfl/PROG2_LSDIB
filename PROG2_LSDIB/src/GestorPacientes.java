@@ -11,18 +11,23 @@ public class GestorPacientes {
     }
 
     public static Paciente selecionarPaciente(Scanner scanner, List<Paciente> pacientes) {
-        System.out.println("Selecione um paciente:");
-        GestorPacientes.mostrarLista(pacientes);
+        System.out.println("|| Lista de Pacientes ||");
+
+        for (Paciente p : pacientes) {
+            System.out.println("ID: " + p.getId());
+        }
+
         System.out.print("Introduza o ID do paciente: ");
-        int id = scanner.nextInt();
+        int idEscolhido = scanner.nextInt();
         scanner.nextLine();
 
-        for (Paciente paciente : pacientes) {
-            if (paciente.getId() == id) {
-                return paciente;
+        for (Paciente p : pacientes) {
+            if (p.getId() == idEscolhido) {
+                return p;
             }
         }
-        System.out.println("Paciente não encontrado.");
+
+        System.out.println("Paciente com ID " + idEscolhido + " não encontrado.");
         return null;
     }
 

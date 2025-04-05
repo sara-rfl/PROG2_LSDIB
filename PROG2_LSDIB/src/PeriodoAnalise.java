@@ -2,6 +2,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -31,6 +33,9 @@ public class PeriodoAnalise {
     }
 
     public static boolean selecionarPeriodoDeAnalisePaciente(Scanner scanner, Paciente paciente) {
+
+        mostrarIntervaloDeRegistos(paciente);
+
         while (true) {
             LocalDate[] periodo = obterPeriodoDeAnalise(scanner);
             LocalDate dataInicio = periodo[0];
@@ -75,4 +80,27 @@ public class PeriodoAnalise {
         }
         return false;
     }
+
+    public static void mostrarIntervaloDeRegistos(Paciente paciente) {
+        List<LocalDateTime> datas = new ArrayList<>();
+        datas.addAll(paciente.getDatasFrequencia());
+        datas.addAll(paciente.getDatasTemperatura());
+        datas.addAll(paciente.getDatasSaturacao());
+
+        System.out.println("|| Datas de Registo para o Paciente " + paciente.getId() + " ||");
+
+        if (datas.isEmpty()) {
+            System.out.println("Este paciente não tem quaisquer registos disponíveis.");
+            return;
+        }
+
+        LocalDateTime min = Collections.min(datas);
+        LocalDateTime max = Collections.max(datas);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        System.out.println("Intervalo de registos: " +
+                min.toLocalDate().format(formatter) + " a " + max.toLocalDate().format(formatter));
+    }
+
+
 }
