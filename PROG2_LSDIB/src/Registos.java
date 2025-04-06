@@ -20,7 +20,6 @@ public class Registos {
             String opcao = scanner.next().toLowerCase();
             if (opcao.equals("s")) {
                 Paciente paciente = criarPaciente(scanner);
-                DadosTeste.pacientes.add(paciente);
                 inserirSinaisVinais(scanner, paciente);
                 System.out.println("Introduza o ID do responsável pelas medições: ");
                 System.out.println("- Técnicos disponíveis: ");
