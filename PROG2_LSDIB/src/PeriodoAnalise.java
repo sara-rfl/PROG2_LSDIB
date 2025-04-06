@@ -1,7 +1,6 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -166,19 +165,81 @@ public class PeriodoAnalise {
 
     /**
      * Tenta converter uma string para {@code LocalDate} usando o formatador especificado.
+     * A string deve estar no formato "dd/MM/yyyy". Caso contrário, retorna {@code null}.
      *
-     * @param input String de data
-     * @param formatter Formatador de data
-     * @return Data convertida ou null se inválida
+     * @param input String de data no formato "dd/MM/yyyy"
+     * @param formatter O formatador de data para converter a string
+     * @return Data convertida para {@code LocalDate}, ou {@code null} se a string for inválida
      */
     private static LocalDate parseDataBasica(String input, DateTimeFormatter formatter) {
-        try {
-            return LocalDate.parse(input, formatter);
-        } catch (Exception e) {
-            return null;
-        }
+        if (!formatoValido(input)) return null;
+
+        String[] partes = input.split("/");
+        int dia = Integer.parseInt(partes[0]);
+        int mes = Integer.parseInt(partes[1]);
+        int ano = Integer.parseInt(partes[2]);
+
+        if (!dataValida(dia, mes, ano)) return null;
+
+        return LocalDate.of(ano, mes, dia);
     }
 
+    /**
+     * Verifica se a string fornecida está no formato válido "dd/MM/yyyy" e contém apenas dígitos.
+     *
+     * @param input String de data a ser validada
+     * @return {@code true} se o formato for válido, caso contrário, {@code false}
+     */
+    public static boolean formatoValido(String input) {
+        if (input == null) return false;
 
+        String[] partes = input.split("/");
+        if (partes.length != 3) return false;
 
+        for (int i = 0; i < 3; i++) {
+            // Espera receber 2 dígitos para dia/mes, 4 para ano
+            int tamanhoEsperado = (i == 2) ? 4 : 2;
+            if (partes[i].length() != tamanhoEsperado) return false;
+
+            for (int j = 0; j < partes[i].length(); j++) {
+                if (!Character.isDigit(partes[i].charAt(j))) return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Verifica se uma data (dia, mês, ano) é válida de acordo com as regras do calendário.
+     * Considera anos bissextos para o mês de fevereiro.
+     *
+     * @param dia O dia da data a ser verificada
+     * @param mes O mês da data a ser verificada
+     * @param ano O ano da data a ser verificada
+     * @return {@code true} se a data for válida, caso contrário, {@code false}
+     */
+    public static boolean dataValida(int dia, int mes, int ano) {
+        if (ano < 1000 || ano > 3000) return false;
+        if (mes < 1 || mes > 12) return false;
+
+        int[] diasPorMes = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+        // Verifica bissexto
+        if (mes == 2 && isAnoBissexto(ano)) {
+            return dia >= 1 && dia <= 29;
+        }
+
+        return dia >= 1 && dia <= diasPorMes[mes - 1];
+    }
+
+    /**
+     * Verifica se um ano é bissexto.
+     * Um ano é bissexto se for divisível por 4, mas não por 100, exceto se for divisível por 400.
+     *
+     * @param ano O ano a ser verificado
+     * @return {@code true} se o ano for bissexto, caso contrário, {@code false}
+     */
+    public static boolean isAnoBissexto(int ano) {
+        return (ano % 4 == 0 && ano % 100 != 0) || (ano % 400 == 0);
+    }
 }
