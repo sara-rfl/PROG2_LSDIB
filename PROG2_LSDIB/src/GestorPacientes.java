@@ -123,7 +123,7 @@ public class GestorPacientes {
      * @param scanner objeto para ler entradas do utilizador
      */
     public static void processarMedidasPaciente(Scanner scanner) {
-        Paciente paciente = GestorPacientes.selecionarPaciente(scanner, DadosTeste.pacientes);
+        Paciente paciente = selecionarPaciente(scanner, DadosTeste.pacientes);
         if (paciente != null) {
             LocalDate[] periodo = PeriodoAnalise.selecionarPeriodoDeAnalisePaciente(scanner, paciente);
             if (periodo != null) {
