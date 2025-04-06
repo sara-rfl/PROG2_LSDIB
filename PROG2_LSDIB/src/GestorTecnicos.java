@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+
 
 /**
  * Classe responsável por gerenciar identificadores únicos para técnicos de saúde.
