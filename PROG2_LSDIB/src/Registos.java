@@ -1,7 +1,17 @@
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
+/**
+ * Classe responsável por realizar o registo de novos pacientes e inserir os seus sinais vitais.
+ */
 public class Registos {
+
+    /**
+     * Inicia o processo interativo de registo de novos pacientes via terminal.
+     * Permite adicionar dados pessoais e sinais vitais, além de associar o registo a um técnico de saúde.
+     *
+     * @param scanner Objeto {@code Scanner} para entrada de dados do utilizador.
+     */
     public static void registoNovoPaciente(Scanner scanner) {
         System.out.println("\n || REGISTO DE NOVOS PACIENTES ||");
         boolean continuar = true;
@@ -38,6 +48,12 @@ public class Registos {
         }
     }
 
+    /**
+     * Solicita os dados pessoais do paciente ao utilizador e cria um novo objeto {@code Paciente}.
+     *
+     * @param scanner Objeto {@code Scanner} para entrada de dados.
+     * @return Um novo objeto {@code Paciente} com os dados fornecidos.
+     */
     public static Paciente criarPaciente(Scanner scanner) {
         scanner.nextLine();
         System.out.println("Introduza os dados do paciente: ");
@@ -55,7 +71,13 @@ public class Registos {
         return new Paciente(nome, dataNascimento, altura, peso, id);
     }
 
-
+    /**
+     * Permite ao utilizador inserir sinais vitais do paciente (frequência cardíaca,
+     * temperatura e saturação de oxigénio).
+     *
+     * @param scanner  Objeto {@code Scanner} para entrada de dados.
+     * @param paciente Paciente ao qual os sinais vitais serão adicionados.
+     */
     public static void inserirSinaisVinais(Scanner scanner, Paciente paciente) {
         System.out.println("Introduza os valores de frequência cardíaca (0 para terminar): ");
         double valor;
