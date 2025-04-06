@@ -25,10 +25,7 @@ public class GestorPacientes {
      */
     public static Paciente selecionarPaciente(Scanner scanner, List<Paciente> pacientes) {
         System.out.println("|| Lista de Pacientes ||");
-
-        for (Paciente p : pacientes) {
-            System.out.println("ID: " + p.getId());
-        }
+        mostrarLista(pacientes);
 
         System.out.print("Introduza o ID do paciente: ");
         int idEscolhido = scanner.nextInt();
@@ -53,7 +50,7 @@ public class GestorPacientes {
      */
     public static List<Paciente> selecionarGrupoPacientes(Scanner scanner, List<Paciente> pacientes) {
         System.out.println("Selecione um grupo de pacientes (IDs separados por espaço):");
-        GestorPacientes.mostrarLista(pacientes);
+        mostrarLista(pacientes);
         System.out.print("Introduza os IDs: ");
 
         // Lê os IDs fornecidos pelo utilizador e divide-os num array
@@ -69,12 +66,10 @@ public class GestorPacientes {
                 }
             }
         }
-
         // Verifica se algum paciente foi selecionado
         if (selecionados.isEmpty()) {
             System.out.println("Nenhum paciente encontrado.");
         }
-
         return selecionados;
     }
 
@@ -128,7 +123,7 @@ public class GestorPacientes {
      * @param scanner objeto para ler entradas do utilizador
      */
     public static void processarMedidasPaciente(Scanner scanner) {
-        Paciente paciente = GestorPacientes.selecionarPaciente(scanner, DadosTeste.pacientes);
+        Paciente paciente = selecionarPaciente(scanner, DadosTeste.pacientes);
         if (paciente != null) {
             LocalDate[] periodo = PeriodoAnalise.selecionarPeriodoDeAnalisePaciente(scanner, paciente);
             if (periodo != null) {
@@ -145,7 +140,7 @@ public class GestorPacientes {
      * @param scanner objeto para ler entradas do utilizador
      */
     public static void processarMedidasGrupo(Scanner scanner) {
-        List<Paciente> grupo = GestorPacientes.selecionarGrupoPacientes(scanner, DadosTeste.pacientes);
+        List<Paciente> grupo = selecionarGrupoPacientes(scanner, DadosTeste.pacientes);
         if (!grupo.isEmpty()) {
             LocalDate[] periodo = PeriodoAnalise.selecionarPeriodoDeAnaliseGrupo(scanner, grupo);
             if (periodo != null) {

@@ -171,7 +171,7 @@ public class PeriodoAnalise {
      * @param formatter O formatador de data para converter a string
      * @return Data convertida para {@code LocalDate}, ou {@code null} se a string for inválida
      */
-    private static LocalDate parseDataBasica(String input, DateTimeFormatter formatter) {
+    public static LocalDate parseDataBasica(String input, DateTimeFormatter formatter) {
         if (!formatoValido(input)) return null;
 
         String[] partes = input.split("/");
