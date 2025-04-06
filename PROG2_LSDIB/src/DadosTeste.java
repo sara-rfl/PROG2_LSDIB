@@ -39,6 +39,14 @@ public class DadosTeste {
         p2.addTemperatura(37.0, LocalDateTime.of(2024, 3, 9, 17, 10));
         p2.addSaturacaoOxigenio(97.0, LocalDateTime.of(2024, 3, 7, 20, 00));
         pacientes.add(p2);
+
+        Paciente p3 = new Paciente("Julio César", "02/02/1980", 1.94, 95, GestorPacientes.gerarNovoId());
+        p3.addFrequenciaCardiaca(115, LocalDateTime.of(2024, 3, 15, 12, 10));
+        p3.addFrequenciaCardiaca(101, LocalDateTime.of(2024, 3, 16, 13, 45));
+        p3.addTemperatura(37.7, LocalDateTime.of(2024, 3, 15, 12, 30));
+        p3.addTemperatura(37.9, LocalDateTime.of(2024, 3, 16, 13, 45));
+        p3.addSaturacaoOxigenio(98.0, LocalDateTime.of(2024, 3, 12, 16, 30));
+        pacientes.add(p3);
     }
 
     /**
