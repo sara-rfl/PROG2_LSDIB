@@ -24,7 +24,6 @@ public class GestorPacientes {
      * @return Paciente selecionado, ou null se o ID não for encontrado
      */
     public static Paciente selecionarPaciente(Scanner scanner, List<Paciente> pacientes) {
-        System.out.println("|| Lista de Pacientes ||");
         mostrarLista(pacientes);
 
         System.out.print("Introduza o ID do paciente: ");
