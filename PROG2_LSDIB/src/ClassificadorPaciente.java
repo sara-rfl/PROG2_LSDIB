@@ -26,16 +26,6 @@ public class ClassificadorPaciente {
     public static final double SAT_NORMAL_MIN = 95.0;
     public static final double SAT_ATENCAO_MIN = 90.0;
 
-    /**
-     * Inicia o processo de classificação, pedindo input ao utilizador
-     * para selecionar o paciente e o intervalo de datas.
-     *
-     * @param scanner Scanner utilizado para ler o input do utilizador
-     * @param pacientes Lista de pacientes disponíveis
-     */
-    public static void iniciarClassificacao(Scanner scanner, List<Paciente> pacientes) {
-        processarResultado(scanner);
-    }
 
     /**
      * Classifica um paciente com base nos sinais vitais registados
