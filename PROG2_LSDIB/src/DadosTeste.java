@@ -2,11 +2,27 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe utilitária responsável por preencher listas de pacientes
+ * e técnicos de saúde para testes.
+ */
 public class DadosTeste {
 
+    /**
+     * Lista pública contendo objetos {@code Paciente} utilizados nos testes.
+     */
     public static List<Paciente> pacientes = new ArrayList<>();
+
+    /**
+     * Lista pública contendo objetos {@code TecnicoSaude} utilizados nos testes.
+     */
     public static List<TecnicoSaude> tecnicos = new ArrayList<>();
 
+    /**
+     * Cria pacientes de teste e adiciona-os à lista {@code pacientes}.
+     * Cada paciente recebe medições simuladas de frequência cardíaca, temperatura corporal
+     * e saturação de oxigénio.
+     */
     public static void criarPacienteTeste() {
         Paciente p1 = new Paciente("João Rodrigues", "25/06/2009", 1.78, 69, GestorPacientes.gerarNovoId());
         p1.addFrequenciaCardiaca(72, LocalDateTime.of(2024, 3, 10, 14, 30));
@@ -24,6 +40,10 @@ public class DadosTeste {
         p2.addSaturacaoOxigenio(97.0, LocalDateTime.of(2024, 3, 7, 20, 00));
         pacientes.add(p2);
     }
+
+    /**
+     * Cria técnicos de saúde de teste e adiciona-os à lista {@code tecnicos}.
+     */
     public static void criarTecnicoTeste(){
         TecnicoSaude t1 = new TecnicoSaude("Pietro Alvez", "22/12/1994", "Enfermeiro", GestorTecnicos.gerarNovoId());
         tecnicos.add(t1);
