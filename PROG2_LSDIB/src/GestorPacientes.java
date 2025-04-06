@@ -44,14 +44,23 @@ public class GestorPacientes {
         return null;
     }
 
+    /**
+     * Permite ao utilizador selecionar um grupo de pacientes a partir de uma lista de pacientes com base nos seus IDs.
+     *
+     * @param scanner objeto para ler entradas do utilizador
+     * @param pacientes lista de pacientes disponíveis para seleção
+     * @return Lista de pacientes selecionados com base nos IDs fornecidos pelo usuário
+     */
     public static List<Paciente> selecionarGrupoPacientes(Scanner scanner, List<Paciente> pacientes) {
         System.out.println("Selecione um grupo de pacientes (IDs separados por espaço):");
         GestorPacientes.mostrarLista(pacientes);
         System.out.print("Introduza os IDs: ");
 
+        // Lê os IDs fornecidos pelo utilizador e divide-os num array
         String[] ids = scanner.nextLine().split(" ");
         List<Paciente> selecionados = new ArrayList<>();
 
+        // Itera sobre os IDs fornecidos e adiciona os pacientes correspondentes
         for (String idStr : ids) {
             int id = Integer.parseInt(idStr);
             for (Paciente paciente : pacientes) {
@@ -59,12 +68,21 @@ public class GestorPacientes {
                     selecionados.add(paciente);
                 }
             }
-        } if (selecionados.isEmpty()) {
+        }
+
+        // Verifica se algum paciente foi selecionado
+        if (selecionados.isEmpty()) {
             System.out.println("Nenhum paciente encontrado.");
-        } return selecionados;
+        }
+
+        return selecionados;
     }
 
-
+    /**
+     * Exibe uma lista de todos os pacientes com os seus respetivos IDs e nomes.
+     *
+     * @param pacientes lista de pacientes a ser exibida
+     */
     public static void mostrarLista (List<Paciente> pacientes) {
         System.out.println("\nLista de Pacientes:");
         for (Paciente paciente : pacientes) {
@@ -72,6 +90,13 @@ public class GestorPacientes {
         }
     }
 
+    /**
+     * Imprime as medidas estatísticas para um determinado sinal vital (frequência cardíaca, temperatura, saturação de oxigénio).
+     * As estatísticas incluem média, desvio padrão, valor mínimo e valor máximo.
+     *
+     * @param sinalVital nome do sinal vital a ser analisado
+     * @param valores lista de valores do sinal vital
+     */
     public static void imprimirMedidas(String sinalVital, List<Double> valores) {
         Estatistica estatistica = new Estatistica(valores);
         System.out.println("\nDados para " + sinalVital + ":");
@@ -81,6 +106,12 @@ public class GestorPacientes {
         System.out.println("Máximo da " + sinalVital + ": " + String.format("%.2f", estatistica.calcularMax()));
     }
 
+    /**
+     * Imprime as medidas para um sinal vital específico selecionado (frequência cardíaca, temperatura ou saturação de oxigénio).
+     *
+     * @param sinalVital nome do sinal vital a ser analisado
+     * @param valores lista de valores do sinal vital
+     */
     public static void imprimirMedidasSelecionadas(String sinalVital, List<Double> valores) {
         if (sinalVital.equals("Frequência Cardíaca")) {
             imprimirMedidas("Frequência Cardíaca", valores);
@@ -91,6 +122,11 @@ public class GestorPacientes {
         }
     }
 
+    /**
+     * Processa as medidas de sinais vitais para um único paciente, selecionando o período de análise.
+     *
+     * @param scanner objeto para ler entradas do utilizador
+     */
     public static void processarMedidasPaciente(Scanner scanner) {
         Paciente paciente = GestorPacientes.selecionarPaciente(scanner, DadosTeste.pacientes);
         if (paciente != null) {
@@ -103,7 +139,11 @@ public class GestorPacientes {
         }
     }
 
-
+    /**
+     * Processa as medidas de sinais vitais para um grupo de pacientes, selecionando o período de análise.
+     *
+     * @param scanner objeto para ler entradas do utilizador
+     */
     public static void processarMedidasGrupo(Scanner scanner) {
         List<Paciente> grupo = GestorPacientes.selecionarGrupoPacientes(scanner, DadosTeste.pacientes);
         if (!grupo.isEmpty()) {
@@ -114,13 +154,15 @@ public class GestorPacientes {
         }
     }
 
-
+    /**
+     * Processa as medidas de sinais vitais para todos os pacientes, selecionando o período de análise.
+     *
+     * @param scanner objeto para ler entradas do utilizador
+     */
     public static void processarMedidasTodos(Scanner scanner) {
         LocalDate[] periodo = PeriodoAnalise.selecionarPeriodoDeAnaliseGrupo(scanner, DadosTeste.pacientes);
         if (periodo != null) {
             Menu.sinaisVitais(scanner, DadosTeste.pacientes, periodo[0], periodo[1]);
         }
     }
-
-
 }
