@@ -219,7 +219,7 @@ public class PeriodoAnalise {
      * @return {@code true} se a data for válida, caso contrário, {@code false}
      */
     public static boolean dataValida(int dia, int mes, int ano) {
-        if (ano < 1000 || ano > 3000) return false;
+        if (ano < 1960 || ano > 2026) return false;
         if (mes < 1 || mes > 12) return false;
 
         int[] diasPorMes = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};

@@ -9,18 +9,21 @@ import java.util.List;
  * frequências cardíacas, temperaturas e saturações de oxigénio, com seus respetivos horários.
  */
 public class Paciente extends Pessoa implements Comparable<Paciente>, Classificavel {
+    // Constantes para os limites dos sinais vitais
+    public static final double FREQUENCIA_CARDIACA_MIN = 30.0;
+    public static final double FREQUENCIA_CARDIACA_MAX = 220.0;
+    public static final double TEMPERATURA_MIN = 30.0;
+    public static final double TEMPERATURA_MAX = 45.0;
+    public static final double SATURACAO_MIN = 70.0;
+    public static final double SATURACAO_MAX = 100.0;
 
     private double altura;
     private double peso;
 
-    private List<Double> frequenciasCardiacas = new ArrayList<>();
-    private List<LocalDateTime> datasFrequencia = new ArrayList<>();
+    private List<Registos> registosFrequencia = new ArrayList<>();
+    private List<Registos> registosTemperatura = new ArrayList<>();
+    private List<Registos> registosSaturacao = new ArrayList<>();
 
-    private List<Double> temperaturas = new ArrayList<>();
-    private List<LocalDateTime> datasTemperatura = new ArrayList<>();
-
-    private List<Double> saturacoesOxigenio = new ArrayList<>();
-    private List<LocalDateTime> datasSaturacao = new ArrayList<>();
 
     /**
      * Construtor da classe Paciente.
@@ -81,9 +84,8 @@ public class Paciente extends Pessoa implements Comparable<Paciente>, Classifica
      * @param data a data e hora em que a frequência foi medida
      */
     public void addFrequenciaCardiaca(double frequencia, LocalDateTime data) {
-        if (frequencia >= Main.FREQUENCIA_CARDIACA_MIN && frequencia <= Main.FREQUENCIA_CARDIACA_MAX) {
-            frequenciasCardiacas.add(frequencia);
-            datasFrequencia.add(data);
+        if (frequencia >= FREQUENCIA_CARDIACA_MIN && frequencia <= FREQUENCIA_CARDIACA_MAX) {
+            registosFrequencia.add(new Registos(frequencia, data));
         }
     }
 
@@ -95,9 +97,8 @@ public class Paciente extends Pessoa implements Comparable<Paciente>, Classifica
      * @param data a data e hora em que a temperatura foi medida
      */
     public void addTemperatura(double temperatura, LocalDateTime data) {
-        if (temperatura >= Main.TEMPERATURA_MIN && temperatura <= Main.TEMPERATURA_MAX) {
-            temperaturas.add(temperatura);
-            datasTemperatura.add(data);
+        if (temperatura >= TEMPERATURA_MIN && temperatura <= TEMPERATURA_MAX) {
+            registosTemperatura.add(new Registos(temperatura, data));
         }
     }
 
@@ -109,65 +110,92 @@ public class Paciente extends Pessoa implements Comparable<Paciente>, Classifica
      * @param data a data e hora em que a saturação foi medida
      */
     public void addSaturacaoOxigenio(double saturacao, LocalDateTime data) {
-        if (saturacao >= Main.SATURACAO_MIN && saturacao <= Main.SATURACAO_MAX) {
-            saturacoesOxigenio.add(saturacao);
-            datasSaturacao.add(data);
+        if (saturacao >= SATURACAO_MIN && saturacao <= SATURACAO_MAX) {
+            registosSaturacao.add(new Registos(saturacao, data));
         }
     }
 
     /**
-     * Retorna a lista de frequências cardíacas registadas para o paciente.
+     * Retorna a lista de valores de frequência cardíaca registados para o paciente.
+     * Os valores são extraídos dos registos completos, contendo data e valor.
      *
-     * @return lista de frequências cardíacas
+     * @return Lista de valores de frequência cardíaca (em bpm)
      */
     public List<Double> getFrequenciasCardiacas() {
-        return frequenciasCardiacas;
+        List<Double> valores = new ArrayList<>();
+        for (Registos r : registosFrequencia) {
+            valores.add(r.getValor());
+        }
+        return valores;
     }
 
     /**
-     * Retorna a lista de datas em que as frequências cardíacas foram registadas.
+     * Retorna a lista de datas e horas em que foram registadas as frequências cardíacas.
      *
-     * @return lista de datas das frequências cardíacas
+     * @return Lista de datas e horas dos registos de frequência cardíaca
      */
     public List<LocalDateTime> getDatasFrequencia() {
-        return datasFrequencia;
+        List<LocalDateTime> datas = new ArrayList<>();
+        for (Registos r : registosFrequencia) {
+            datas.add(r.getData());
+        }
+        return datas;
     }
 
     /**
-     * Retorna a lista de temperaturas registadas para o paciente.
+     * Retorna a lista de valores de temperatura corporal registados para o paciente.
+     * Os valores são extraídos dos registos completos, contendo data e valor.
      *
-     * @return lista de temperaturas
+     * @return Lista de valores de temperatura (em ºC)
      */
     public List<Double> getTemperaturas() {
-        return temperaturas;
+        List<Double> valores = new ArrayList<>();
+        for (Registos r : registosTemperatura) {
+            valores.add(r.getValor());
+        }
+        return valores;
     }
 
     /**
-     * Retorna a lista de datas em que as temperaturas foram registadas.
+     * Retorna a lista de datas e horas em que foram registadas as temperaturas corporais.
      *
-     * @return lista de datas das temperaturas
+     * @return Lista de datas e horas dos registos de temperatura
      */
     public List<LocalDateTime> getDatasTemperatura() {
-        return datasTemperatura;
+        List<LocalDateTime> datas = new ArrayList<>();
+        for (Registos r : registosTemperatura) {
+            datas.add(r.getData());
+        }
+        return datas;
     }
 
     /**
-     * Retorna a lista de saturações de oxigênio registadas para o paciente.
+     * Retorna a lista de valores de saturação de oxigénio registados para o paciente.
+     * Os valores são extraídos dos registos completos, contendo data e valor.
      *
-     * @return lista de saturações de oxigénio
+     * @return Lista de valores de saturação de oxigénio (em %)
      */
     public List<Double> getSaturacoesOxigenio() {
-        return saturacoesOxigenio;
+        List<Double> valores = new ArrayList<>();
+        for (Registos r : registosSaturacao) {
+            valores.add(r.getValor());
+        }
+        return valores;
     }
 
     /**
-     * Retorna a lista de datas em que as saturações de oxigénio foram registadas.
+     * Retorna a lista de datas e horas em que foram registadas as saturações de oxigénio.
      *
-     * @return lista de datas das saturações de oxigénio
+     * @return Lista de datas e horas dos registos de saturação de oxigénio
      */
     public List<LocalDateTime> getDatasSaturacao() {
-        return datasSaturacao;
+        List<LocalDateTime> datas = new ArrayList<>();
+        for (Registos r : registosSaturacao) {
+            datas.add(r.getData());
+        }
+        return datas;
     }
+
 
     /**
      * Devolve a classificação geral do paciente com base nos últimos valores de
@@ -178,7 +206,7 @@ public class Paciente extends Pessoa implements Comparable<Paciente>, Classifica
      */
     @Override
     public String getClassificacao() {
-        if (frequenciasCardiacas.isEmpty() || temperaturas.isEmpty() || saturacoesOxigenio.isEmpty()) {
+        if (getFrequenciasCardiacas().isEmpty() || getTemperaturas().isEmpty() || getSaturacoesOxigenio().isEmpty()) {
             return "Sem dados suficientes";
         }
         return ClassificadorPaciente.classificarPaciente(this);

@@ -125,7 +125,6 @@ public class ClassificadorPaciente {
      * @param resultado Texto formatado com as classificações
      */
     private static void apresentarResultado(String resultado) {
-        System.out.println("\nResultado da Classificação:");
         System.out.println(resultado);
     }
 

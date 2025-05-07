@@ -6,14 +6,6 @@ import java.util.Scanner;
  */
 public class Main {
 
-    // Constantes para os limites dos sinais vitais
-    public static final double FREQUENCIA_CARDIACA_MIN = 30.0;
-    public static final double FREQUENCIA_CARDIACA_MAX = 220.0;
-    public static final double TEMPERATURA_MIN = 30.0;
-    public static final double TEMPERATURA_MAX = 45.0;
-    public static final double SATURACAO_MIN = 70.0;
-    public static final double SATURACAO_MAX = 100.0;
-
     /**
      * Metodo principal que inicia a aplicação e chama o menu inicial.
      * Inicializa os dados de teste de pacientes e técnicos.
@@ -58,7 +50,7 @@ public class Main {
             // Executa a ação correspondente à opção escolhida
             if (opcao == 1) {
                 // Regista um novo paciente
-                Registos.registoNovoPaciente(scanner);
+                GestorRegistos.registoNovoPaciente(scanner);
             } else if (opcao == 2) {
                 // Chama o menu para calcular medidas de sumário
                 Menu.medidasSumario(scanner);
