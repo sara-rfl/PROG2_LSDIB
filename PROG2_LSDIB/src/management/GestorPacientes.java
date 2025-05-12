@@ -166,4 +166,9 @@ public class GestorPacientes {
             Menu.sinaisVitais(scanner, DadosTeste.pacientes, periodo[0], periodo[1]);
         }
     }
+
+    public List<Paciente> getPacientes() {
+        return DadosTeste.pacientes;
+    }
+
 }

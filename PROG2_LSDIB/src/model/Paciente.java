@@ -228,6 +228,17 @@ public class Paciente extends Pessoa implements Comparable<Paciente>, Classifica
         return this.getDataDeNascimento().compareTo(o.getDataDeNascimento ());
     }
 
+    public List<Registos> getFrequenciaCardiaca() {
+        return registosFrequencia;
+    }
+
+    public List<Registos> getTemperatura() {
+        return registosTemperatura;
+    }
+
+    public List<Registos> getSaturacaoOxigenio() {
+        return registosSaturacao;
+    }
 
 
 }

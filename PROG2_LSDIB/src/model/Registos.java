@@ -18,4 +18,9 @@ public class Registos {
     public LocalDateTime getData() {
         return data;
     }
+
+    public void alterarValorPercentagem(double percentagem) {
+        this.valor *= (1 + percentagem / 100.0);
+    }
+
 }
