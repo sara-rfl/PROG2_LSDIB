@@ -23,4 +23,9 @@ public class Registos {
         this.valor *= (1 + percentagem / 100.0);
     }
 
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
+
 }

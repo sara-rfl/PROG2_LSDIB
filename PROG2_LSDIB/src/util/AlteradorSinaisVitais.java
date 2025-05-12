@@ -25,14 +25,20 @@ public class AlteradorSinaisVitais {
 
             for (Paciente paciente : pacientes) {
                 for (Registos r : paciente.getFrequenciaCardiaca()) {
-                    r.alterarValorPercentagem(percentagem);
+                    alterarValor(r, percentagem);
                 }
                 for (Registos r : paciente.getTemperatura()) {
-                    r.alterarValorPercentagem(percentagem);
+                    alterarValor(r, percentagem);
                 }
                 for (Registos r : paciente.getSaturacaoOxigenio()) {
-                    r.alterarValorPercentagem(percentagem);
+                    alterarValor(r, percentagem);
                 }
             }
         }
+
+    private static void alterarValor(Registos r, double percentagem) {
+        double novoValor = r.getValor() * (1 + percentagem / 100.0);
+        r.setValor(novoValor); // Este metodo será adicionado a seguir
+    }
+
 }
