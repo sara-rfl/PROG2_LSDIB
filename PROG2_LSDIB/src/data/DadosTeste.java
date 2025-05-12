@@ -1,3 +1,10 @@
+package data;
+
+import model.Paciente;
+import model.TecnicoSaude;
+import management.GestorPacientes;
+import management.GestorTecnicos;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,12 +16,12 @@ import java.util.List;
 public class DadosTeste {
 
     /**
-     * Lista pública contendo objetos {@code Paciente} utilizados nos testes.
+     * Lista pública contendo objetos {@code entidades.Paciente} utilizados nos testes.
      */
     public static List<Paciente> pacientes = new ArrayList<>();
 
     /**
-     * Lista pública contendo objetos {@code TecnicoSaude} utilizados nos testes.
+     * Lista pública contendo objetos {@code entidades.TecnicoSaude} utilizados nos testes.
      */
     public static List<TecnicoSaude> tecnicos = new ArrayList<>();
 

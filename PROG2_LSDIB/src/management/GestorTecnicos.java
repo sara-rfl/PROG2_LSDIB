@@ -1,4 +1,4 @@
-
+package management;
 
 /**
  * Classe responsável por gerenciar identificadores únicos para técnicos de saúde.

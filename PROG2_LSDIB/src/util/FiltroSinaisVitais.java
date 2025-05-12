@@ -1,3 +1,7 @@
+package util;
+
+import model.Paciente;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -38,7 +42,7 @@ public class FiltroSinaisVitais {
     /**
      * Obtém os valores de sinais vitais de um paciente filtrados por tipo e intervalo de datas.
      *
-     * @param paciente Paciente cujos dados serão analisados
+     * @param paciente entidades.Paciente cujos dados serão analisados
      * @param tipo Tipo de sinal vital ("Frequência Cardíaca", "Temperatura", "Saturação de Oxigênio")
      * @param inicio Data de início do intervalo
      * @param fim Data de fim do intervalo

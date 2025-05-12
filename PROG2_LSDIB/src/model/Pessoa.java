@@ -1,9 +1,14 @@
+package model;
+
+import interfaces.OrdenavelPorData;
+import interfaces.PessoaInterface;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
  * Classe que representa uma pessoa com nome, data de nascimento e identificador.
- * Implementa as 'interfaces' {@code PessoaInterface} e {@code OrdenavelPorData}.
+ * Implementa as 'interfaces' {@code interfaces.PessoaInterface} e {@code interfaces.OrdenavelPorData}.
  */
 public class Pessoa implements PessoaInterface, OrdenavelPorData {
 
@@ -15,7 +20,7 @@ public class Pessoa implements PessoaInterface, OrdenavelPorData {
     private int id;
 
     /**
-     * Construtor da classe Pessoa.
+     * Construtor da classe entidades.Pessoa.
      *
      * @param nome o nome da pessoa
      * @param dataDeNascimento a data de nascimento da pessoa no formato dd/MM/yyyy
@@ -37,7 +42,7 @@ public class Pessoa implements PessoaInterface, OrdenavelPorData {
     }
 
     /**
-     * Implementação do método {@code getDataNascimento} da interface {@code PessoaInterface}.
+     * Implementação do método {@code getDataNascimento} da interface {@code interfaces.PessoaInterface}.
      * Retorna a data de nascimento da pessoa.
      *
      * @return a data de nascimento da pessoa
@@ -90,11 +95,11 @@ public class Pessoa implements PessoaInterface, OrdenavelPorData {
     public void setId(int id) { this.id = id; }
 
     public String toString() {
-        return String.format("Pessoa: %s, ID: %d, Data de Nascimento: %s", nome, id, dataDeNascimento);
+        return String.format("entidades.Pessoa: %s, ID: %d, Data de Nascimento: %s", nome, id, dataDeNascimento);
     }
 
     /**
-     * Implementação do método da interface {@code OrdenavelPorData},
+     * Implementação do método da interface {@code interfaces.OrdenavelPorData},
      * que define a data de referência para ordenação.
      *
      * @return Data de nascimento da pessoa

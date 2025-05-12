@@ -1,3 +1,7 @@
+package management;
+
+import model.Paciente;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -53,12 +57,12 @@ public class PeriodoAnalise {
      * Valida se o paciente possui registos no intervalo escolhido.
      *
      * @param scanner Scanner para input
-     * @param paciente Paciente em análise
+     * @param paciente entidades.Paciente em análise
      * @return Período válido com registos, no formato [dataInicio, dataFim]
      */
     public static LocalDate[] selecionarPeriodoDeAnalisePaciente(Scanner scanner, Paciente paciente) {
         // mostra os intervalos para cada paciente
-        System.out.println("\n|| Datas de Registo para o Paciente " + paciente.getId() + " ||");
+        System.out.println("\n|| Datas de Registo para o entidades.Paciente " + paciente.getId() + " ||");
         String intervalo = obterIntervaloDeRegistos(paciente);
         System.out.println("Intervalo de registos: " + intervalo + "\n");
 
@@ -110,7 +114,7 @@ public class PeriodoAnalise {
     /**
      * Verifica se o paciente possui algum registo de sinais vitais no intervalo especificado.
      *
-     * @param paciente Paciente a verificar
+     * @param paciente entidades.Paciente a verificar
      * @param dataInicio Data de início do intervalo
      * @param dataFim Data de fim do intervalo
      * @return true se houver registos dentro do intervalo
@@ -143,7 +147,7 @@ public class PeriodoAnalise {
     /**
      * Obtém o intervalo completo de datas com registos para um paciente.
      *
-     * @param paciente Paciente alvo
+     * @param paciente entidades.Paciente alvo
      * @return String com intervalo formatado ou "Sem registos" se não houver dados
      */
     public static String obterIntervaloDeRegistos(Paciente paciente) {

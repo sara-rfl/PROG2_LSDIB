@@ -1,3 +1,9 @@
+package UI;
+
+import data.DadosTeste;
+import management.GestorRegistos;
+import management.Listas;
+
 import java.util.Scanner;
 
 /**
@@ -36,11 +42,11 @@ public class Main {
             // Exibe as opções do menu
             System.out.println("\n || BEM-VINDO, UTILIZADOR. MONITORIZAÇÃO DE UCI|| ");
             System.out.println("\nEscolha uma opção:");
-            System.out.println("1 - Registar Paciente");
-            System.out.println("2 - Cálculo de Medidas de Sumário");
-            System.out.println("3 - Classificação de Sinais Vitais");
-            System.out.println("4 - Lista de Pacientes por Data de Nascimento");
-            System.out.println("5 - Lista de Técnicos");
+            System.out.println("1 - Registar paciente");
+            System.out.println("2 - Cálculo de medidas de sumário");
+            System.out.println("3 - Classificação de sinais vitais");
+            System.out.println("4 - Lista de pacientes por data de nascimento");
+            System.out.println("5 - Lista de técnicos");
             System.out.println("6 - Sair");
 
             // Lê a opção escolhida pelo utilizador

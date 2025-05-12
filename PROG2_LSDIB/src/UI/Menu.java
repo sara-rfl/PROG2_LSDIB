@@ -1,3 +1,10 @@
+package UI;
+
+import model.Paciente;
+import management.GestorPacientes;
+import util.ClassificadorPaciente;
+import util.FiltroSinaisVitais;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +71,7 @@ public class Menu {
             System.out.println("2. Oxigénio");
             System.out.println("3. Temperatura");
             System.out.println("4. Todas");
-            System.out.println("5. Voltar ao Menu Principal");
+            System.out.println("5. Voltar ao menu Principal");
             opcao = scanner.nextInt();
             scanner.nextLine();
 
@@ -131,10 +138,9 @@ public class Menu {
         boolean continuarClassificacao = true;
 
         while (continuarClassificacao) {
-            // Menu de opções
             System.out.println("\n || CLASSIFICAÇÃO DE PACIENTES || ");
-            System.out.println("1 - Selecionar e Classificar Paciente");
-            System.out.println("2 - Voltar ao Menu Principal");
+            System.out.println("1 - Selecionar e classificar paciente");
+            System.out.println("2 - Voltar ao menu Principal");
             System.out.print("Escolha uma opção: ");
             int escolha = scanner.nextInt();
             scanner.nextLine();

@@ -1,3 +1,5 @@
+package util;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,7 +19,7 @@ public class AvaliadorSinalVital {
      * @param valores Lista de valores correspondentes aos sinais vitais
      * @param alvo    Data alvo para procurar o registo
      * @param tipo    Tipo de sinal vital: "FC" (frequência cardíaca), "TEMP" (temperatura corporal) ou "SAT" (saturação de oxigénio)
-     * @return Um objeto {@code ClassificacaoComData} com a classificação do valor encontrado e a data correspondente,
+     * @return Um objeto {@code util.ClassificacaoComData} com a classificação do valor encontrado e a data correspondente,
      *         ou uma mensagem de ausência de registos se nenhum valor for encontrado.
      */
     public static ClassificacaoComData classificarValorEmData(List<LocalDateTime> datas, List<Double> valores, LocalDate alvo, String tipo) {

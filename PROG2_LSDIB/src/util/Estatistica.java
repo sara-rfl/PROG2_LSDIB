@@ -1,3 +1,7 @@
+package util;
+
+import interfaces.EstatisticaVital;
+
 import java.util.List;
 /**
  * Classe que implementa cálculos estatísticos básicos (média, desvio padrão, mínimo e máximo)

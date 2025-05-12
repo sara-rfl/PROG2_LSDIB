@@ -1,3 +1,5 @@
+package interfaces;
+
 /**
  * Interface que define um contrato para qualquer entidade que possa ser classificada.
  */

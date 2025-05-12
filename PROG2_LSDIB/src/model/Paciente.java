@@ -1,10 +1,14 @@
+package model;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import interfaces.Classificavel;
+import util.ClassificadorPaciente;
 
 /**
- * A classe Paciente representa um paciente com informações pessoais,
- * dados de saúde e implementa as 'interfaces' {@code Comparable<Paciente>} e {@code Classificavel}.
+ * A classe entidades.Paciente representa um paciente com informações pessoais,
+ * dados de saúde e implementa as 'interfaces' {@code Comparable<entidades.Paciente>} e {@code interfaces.Classificavel}.
  * O paciente possui informações como altura, peso, e listas para armazenar
  * frequências cardíacas, temperaturas e saturações de oxigénio, com seus respetivos horários.
  */
@@ -26,7 +30,7 @@ public class Paciente extends Pessoa implements Comparable<Paciente>, Classifica
 
 
     /**
-     * Construtor da classe Paciente.
+     * Construtor da classe entidades.Paciente.
      *
      * @param nome o nome do paciente
      * @param dataDeNascimento a data de nascimento do paciente no formato dd/MM/yyyy

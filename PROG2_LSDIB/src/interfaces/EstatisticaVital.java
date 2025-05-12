@@ -1,3 +1,5 @@
+package interfaces;
+
 /**
  * Interface que define os métodos para cálculo de estatísticas sobre valores vitais.
  */

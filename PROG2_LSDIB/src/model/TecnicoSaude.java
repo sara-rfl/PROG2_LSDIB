@@ -1,12 +1,14 @@
+package model;
+
 /**
- * A classe TecnicoSaude representa um técnico de saúde, que é uma subclasse de Pessoa.
+ * A classe entidades.TecnicoSaude representa um técnico de saúde, que é uma subclasse de entidades.Pessoa.
  * Esta armazena informações sobre a categoria profissional do técnico.
  */
 public class TecnicoSaude extends Pessoa {
     private String categoriaProfissional;
 
     /**
-     * Construtor para a classe TecnicoSaude.
+     * Construtor para a classe entidades.TecnicoSaude.
      *
      * @param nome o nome do técnico de saúde
      * @param dataDeNascimento a data de nascimento do técnico de saúde

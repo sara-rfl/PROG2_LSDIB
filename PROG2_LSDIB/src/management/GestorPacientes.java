@@ -1,10 +1,17 @@
+package management;
+
+import data.DadosTeste;
+import model.Paciente;
+import util.Estatistica;
+import UI.Menu;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class GestorPacientes {
-    // cria um novo int com IDs dos pacientes, começando no 1000 ("Paciente Zero" = ID:1000)
+    // cria um novo int com IDs dos pacientes, começando no 1000
     private static int currentId = 1000;
 
     /**
@@ -21,7 +28,7 @@ public class GestorPacientes {
      *
      * @param scanner Scanner para input
      * @param pacientes Lista de pacientes disponíveis
-     * @return Paciente selecionado, ou null se o ID não for encontrado
+     * @return entidades.Paciente selecionado, ou null se o ID não for encontrado
      */
     public static Paciente selecionarPaciente(Scanner scanner, List<Paciente> pacientes) {
         mostrarLista(pacientes);

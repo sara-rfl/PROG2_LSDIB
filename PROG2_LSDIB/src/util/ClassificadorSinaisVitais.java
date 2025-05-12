@@ -1,3 +1,5 @@
+package util;
+
 /**
  * Classe auxiliar responsável por classificar individualmente
  * valores de sinais vitais como Frequência Cardíaca, Temperatura

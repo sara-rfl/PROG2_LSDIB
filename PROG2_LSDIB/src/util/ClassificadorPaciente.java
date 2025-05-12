@@ -1,3 +1,10 @@
+package util;
+
+import data.DadosTeste;
+import model.Paciente;
+import management.GestorPacientes;
+import management.PeriodoAnalise;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -68,7 +75,7 @@ public class ClassificadorPaciente {
     /**
      * Classifica um paciente com base nos valores mais recentes dos sinais vitais.
      *
-     * @param paciente Paciente a ser avaliado
+     * @param paciente entidades.Paciente a ser avaliado
      * @return String com a classificação dos três sinais vitais mais recentes
      */
     public static String classificarPaciente(Paciente paciente) {

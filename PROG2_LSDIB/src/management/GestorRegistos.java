@@ -1,3 +1,9 @@
+package management;
+
+import data.DadosTeste;
+import model.Paciente;
+import model.TecnicoSaude;
+
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
@@ -38,7 +44,7 @@ public class GestorRegistos {
                 }
                 if (tecnicoSelecionado != null) {
                     DadosTeste.pacientes.add(paciente);
-                    System.out.println("Paciente " + paciente.getId() + " registado com sucesso pelo técnico de saúde " + tecnicoSelecionado.getNome() + "!");
+                    System.out.println("entidades.Paciente " + paciente.getId() + " registado com sucesso pelo técnico de saúde " + tecnicoSelecionado.getNome() + "!");
                 }
 
             } else {
@@ -48,10 +54,10 @@ public class GestorRegistos {
     }
 
     /**
-     * Solicita os dados pessoais do paciente ao utilizador e cria um novo objeto {@code Paciente}.
+     * Solicita os dados pessoais do paciente ao utilizador e cria um novo objeto {@code entidades.Paciente}.
      *
      * @param scanner Objeto {@code Scanner} para entrada de dados.
-     * @return Um novo objeto {@code Paciente} com os dados fornecidos.
+     * @return Um novo objeto {@code entidades.Paciente} com os dados fornecidos.
      */
     public static Paciente criarPaciente(Scanner scanner) {
         scanner.nextLine();
@@ -75,7 +81,7 @@ public class GestorRegistos {
      * temperatura e saturação de oxigénio).
      *
      * @param scanner  Objeto {@code Scanner} para entrada de dados.
-     * @param paciente Paciente ao qual os sinais vitais serão adicionados.
+     * @param paciente entidades.Paciente ao qual os sinais vitais serão adicionados.
      */
     public static void inserirSinaisVinais(Scanner scanner, Paciente paciente) {
         System.out.println("Introduza os valores de frequência cardíaca (0 para terminar): ");

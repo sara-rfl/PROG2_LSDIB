@@ -1,3 +1,8 @@
+package management;
+
+import model.Paciente;
+import model.TecnicoSaude;
+
 import java.util.Comparator;
 import java.util.List;
 
