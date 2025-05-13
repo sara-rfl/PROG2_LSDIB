@@ -1,3 +1,4 @@
+// Dados de teste para o sistema
 package data;
 
 import model.Paciente;
