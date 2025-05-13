@@ -1,8 +1,10 @@
 package UI;
 
 import data.DadosTeste;
+import management.GestorPacientes;
 import management.GestorRegistos;
 import management.Listas;
+import util.AlteradorSinaisVitais;
 
 import java.util.Scanner;
 
@@ -47,7 +49,8 @@ public class Main {
             System.out.println("3 - Classificação de sinais vitais");
             System.out.println("4 - Lista de pacientes por data de nascimento");
             System.out.println("5 - Lista de técnicos");
-            System.out.println("6 - Sair");
+            System.out.println("6 - Simulação da alteração percentual dos sinais vitais");
+            System.out.println("7 - Sair");
 
             // Lê a opção escolhida pelo utilizador
             int opcao = scanner.nextInt();
@@ -72,6 +75,9 @@ public class Main {
                 Listas.ordenarTecnicos(DadosTeste.tecnicos);
                 Listas.mostrarTecnicos(DadosTeste.tecnicos);
             } else if (opcao == 6) {
+                // Faz a simulação da alteração percentual dos sianis vitais de todos os pacientes
+                new AlteradorSinaisVitais(new GestorPacientes(), new GestorRegistos()).iniciarAlteracao(scanner);
+            } else if (opcao == 7) {
                 // Fecha o programa
                 System.out.println("A sair...");
                 continuarMenu = false;
